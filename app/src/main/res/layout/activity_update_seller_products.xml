@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".UpdateSellerProducts"
+    android:background="@drawable/seller_dashback">
+
+    <LinearLayout
+        android:layout_width="350dp"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+        android:padding="20dp"
+        android:background="@drawable/skyblue_border">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Edit Item"
+            android:layout_marginTop="0dp"
+            android:textSize="24sp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="12dp"
+            android:textColor="@color/Sapphire"/>
+
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="20dp"
+            android:hint="Item Name"
+            android:layout_gravity="center"
+            android:id="@+id/referenceItemName"
+            android:textSize="18sp"
+            android:textColor="@color/Sapphire"
+            android:background="@drawable/skyblue_border"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="20dp"
+            android:hint="Price"
+            android:layout_gravity="center"
+            android:id="@+id/editItemPrice"
+            android:textSize="18sp"
+            android:textColor="@color/Sapphire"
+            android:background="@drawable/skyblue_border"/>
+
+
+
+        <EditText
+            android:background="@drawable/skyblue_border"
+            android:id="@+id/editItemDescription"
+            android:layout_width="match_parent"
+            android:layout_height="171dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:padding="20dp"
+            android:hint="Description"
+            android:textColor="@color/Sapphire"
+            android:textSize="18sp" />
+
+
+
+        <Button
+            android:id="@+id/editUpdateItemBtn"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="20dp"
+            android:drawableLeft="@drawable/baseline_edit_24"
+            android:padding="20dp"
+            android:text="Save Changes"
+            android:textSize="18sp"
+            app:cornerRadius="30dp" />
+
+    </LinearLayout>
+
+</LinearLayout>
+

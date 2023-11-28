@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AccountFragment"
+    android:background="@drawable/buyer_dashback">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="350dp"
+                android:layout_height="400dp"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:padding="20dp"
+                android:background="@drawable/skyblue_border"
+                android:backgroundTint="#80FFFFFF">
+
+
+                <ImageView
+                    android:layout_width="130dp"
+                    android:layout_height="130dp"
+                    android:layout_marginTop="40dp"
+                    android:background="@drawable/baseline_account_dp"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:padding="5dp"
+                    android:text="User Name"
+                    android:textStyle="bold"
+                    android:textColor="@color/Sapphire"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:padding="5dp"
+                    android:text="Full Name"
+                    android:textColor="@color/Sapphire"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:padding="5dp"
+                    android:text="Phone Number"
+                    android:textColor="@color/Sapphire"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:padding="5dp"
+                    android:text="Complete Address"
+                    android:textColor="@color/Sapphire"
+                    android:textSize="16sp"/>
+
+
+
+
+                <Button
+                    android:layout_width="300dp"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="30dp"
+                    android:text="Edit Profile"
+                    android:id="@+id/edit_Profile_button"
+                    android:textSize="18sp"
+                    app:cornerRadius="30dp"
+                    android:layout_gravity="center"/>
+
+                <Button
+                    android:layout_width="300dp"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Seller Mode"
+                    android:id="@+id/sellerDashboard"
+                    android:textSize="18sp"
+                    app:cornerRadius="30dp"
+                    android:layout_gravity="center"/>
+                <Button
+                    android:layout_width="300dp"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="Be a Seller"
+                    android:id="@+id/beSellerBtn"
+                    android:textSize="18sp"
+                    app:cornerRadius="30dp"
+                    android:layout_gravity="center"/>
+
+            </LinearLayout>
+
+    </ScrollView>
+
+</FrameLayout>

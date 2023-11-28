@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ItemDetailActivity"
+    android:background="@drawable/seller_dashback">
+
+    <LinearLayout
+        android:layout_width="350dp"
+        android:layout_marginTop="20dp"
+        android:layout_height="600dp"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal"
+        android:padding="20dp"
+        android:background="@drawable/skyblue_border">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/detailItemName"
+            android:text="Item Name"
+            android:layout_marginTop="0dp"
+            android:textSize="24sp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="12dp"
+            android:textColor="@color/Sapphire"/>
+
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:id="@+id/detailImage"
+            android:padding="8dp"
+            android:layout_gravity="center"
+            android:src="@drawable/baseline_insert_photo_24"
+            android:scaleType="fitXY"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="20dp"
+            android:text="Price"
+            android:layout_gravity="center"
+            android:id="@+id/detailItemPrice"
+            android:textSize="18sp"
+            android:textColor="@color/Sapphire"/>
+
+
+        <TextView
+            android:id="@+id/detailItemDescription"
+            android:layout_width="match_parent"
+            android:layout_height="141dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:padding="20dp"
+            android:text="Description"
+            android:textColor="@color/Sapphire"
+            android:textSize="18sp" />
+
+        <!-- Buttons in a horizontal layout -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/deleteItemBtn"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="70dp"
+                android:padding="20dp"
+                android:text="Delete"
+                android:textSize="18sp"
+                app:cornerRadius="30dp"
+                android:drawableLeft="@drawable/baseline_delete_24"
+                android:drawablePadding="3dp"/>
+
+            <Button
+                android:id="@+id/updateItemBtn"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="70dp"
+                android:layout_marginStart="8dp"
+                android:drawableLeft="@drawable/baseline_edit_24"
+                android:drawablePadding="3dp"
+                android:padding="20dp"
+                android:text="Edit"
+                android:textSize="18sp"
+                app:cornerRadius="30dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

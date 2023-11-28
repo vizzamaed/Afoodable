@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/buyer_dashback"
+    tools:context=".SellerRegistration">
+
+
+    <LinearLayout
+        android:layout_width="350dp"
+        android:layout_height="400dp"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:background="@drawable/skyblue_border">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Seller Registration"
+                android:textAlignment="center"
+                android:textColor="@color/Sapphire"
+                android:textSize="20dp" />
+
+
+            <EditText
+                android:id="@+id/maile"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/skyblue_border"
+                android:drawableLeft="@drawable/baseline_email_24"
+                android:drawablePadding="8dp"
+                android:hint="Afoodable Email"
+                android:padding="8dp"
+                android:textColor="@color/grey" />
+
+            <EditText
+                android:id="@+id/nameFirst"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/skyblue_border"
+                android:drawableLeft="@drawable/baseline_account_circle_24"
+                android:drawablePadding="8dp"
+                android:hint="First Name"
+                android:padding="8dp"
+                android:textColor="@color/grey" />
+
+            <EditText
+                android:id="@+id/nameLast"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/skyblue_border"
+                android:drawableLeft="@drawable/baseline_account_circle_24"
+                android:drawablePadding="8dp"
+                android:hint="Last Name"
+                android:padding="8dp"
+                android:textColor="@color/grey" />
+
+            <EditText
+                android:id="@+id/nameBusiness"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/skyblue_border"
+                android:drawableLeft="@drawable/baseline_business_24"
+                android:drawablePadding="8dp"
+                android:hint="Business Name"
+                android:padding="8dp"
+                android:textColor="@color/grey" />
+
+            <EditText
+                android:id="@+id/locationBusiness"
+                android:layout_width="300dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/skyblue_border"
+                android:drawableLeft="@drawable/baseline_location_on_24"
+                android:drawablePadding="8dp"
+                android:hint="Business Address (Stall Number/Block Section)"
+                android:padding="8dp"
+                android:textColor="@color/grey" />
+
+            <EditText
+                android:id="@+id/numberTIN"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/skyblue_border"
+                android:drawableLeft="@drawable/baseline_numbers_24"
+                android:drawablePadding="8dp"
+                android:hint="TIN Number"
+                android:padding="8dp"
+                android:textColor="@color/grey" />
+
+            <EditText
+                android:id="@+id/numberDTI"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/skyblue_border"
+                android:drawableLeft="@drawable/baseline_numbers_24"
+                android:drawablePadding="8dp"
+                android:hint="DTI Business Name Number"
+                android:padding="8dp"
+                android:textColor="@color/grey" />
+
+            <EditText
+                android:id="@+id/numberBFAR"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/skyblue_border"
+                android:drawableLeft="@drawable/baseline_numbers_24"
+                android:drawablePadding="8dp"
+                android:hint="BFAR Certificate Number"
+                android:padding="8dp"
+                android:textColor="@color/grey" />
+
+
+            <Button
+                android:id="@+id/sellerRegistrationBtn"
+                android:layout_width="300dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="15dp"
+                android:text="Register"
+                android:textSize="18sp"
+                app:cornerRadius="30dp" />
+
+    </LinearLayout>
+
+</ScrollView>

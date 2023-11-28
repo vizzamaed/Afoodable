@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TransactionsFragment"
+    android:background="@drawable/seller_dashback">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <ScrollView
+        android:layout_width="350dp"
+        android:layout_height="700dp"
+        android:layout_marginLeft="30dp"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:background="@drawable/skyblue_border"
+        android:layout_below="@id/search"
+        android:layout_marginTop="20dp"
+        android:backgroundTint="#80FFFFFF">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Notifications"
+            android:textSize="36sp"
+            android:textColor="@color/Sapphire"
+            android:gravity="center"
+            />
+    </ScrollView>
+</FrameLayout>
