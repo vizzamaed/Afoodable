@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.afoodable"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -72,6 +72,8 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation("androidx.core:core-ktx:+")
+    implementation("com.google.gms:google-services:4.4.0")
 
 //firebase
     implementation("com.google.firebase:firebase-auth:22.3.0")

@@ -114,7 +114,6 @@ class LogInActivity : AppCompatActivity() {
                                 startActivity(Intent(this@LogInActivity, MainActivity::class.java))
                                 finish()
                                 return
-
                         }
                     }
                 }

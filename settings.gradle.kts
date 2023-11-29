@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Afoodable"
 include(":app")
+include(":afoodableadmin")
