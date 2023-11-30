@@ -65,30 +65,25 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
     //NA ADD BEHH
-    private fun signupUser(fullname: String,username: String,phone: String, address:String,email:String,password:String){
-        databaseReference.orderByChild("username").equalTo(username).addListenerForSingleValueEvent(object :ValueEventListener{
-            override fun onDataChange(dataSnapshot: DataSnapshot){
-                if(!dataSnapshot.exists()){
-                    val id=databaseReference.push().key
+    private fun signupUser(fullname: String, username: String, phone: String, address: String, email: String, password: String) {
+        val currentUser = firebaseAuth.currentUser
+        val userId = currentUser?.uid
 
+        if (userId != null) {
+            val userData = UserData(userId, fullname, username, phone, address, email, password)
 
-                    val userData=UserData(id,fullname,username,phone,address,email,password)
-                    databaseReference.child(id!!).setValue(userData)
-                    Toast.makeText(this@SignUpActivity,"Signup Successful",Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this@SignUpActivity, LogInActivity::class.java))
-                    finish()
+            // Use the Firebase Authentication UID as the ID
+            databaseReference.child(userId).setValue(userData)
 
-                }else{
-                    Toast.makeText(this@SignUpActivity,"User already exists",Toast.LENGTH_SHORT).show()
-                }
-
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                Toast.makeText(this@SignUpActivity,"Database Error ${databaseError.message}",Toast.LENGTH_SHORT).show()
-            }
-        })
-
+            Toast.makeText(this@SignUpActivity, "Signup Successful", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this@SignUpActivity, LogInActivity::class.java))
+            finish()
+        } else {
+            // Handle the case where the user is not authenticated
+            Toast.makeText(this@SignUpActivity, "User not authenticated", Toast.LENGTH_SHORT).show()
+        }
     }
-    //
+
+
 }
+

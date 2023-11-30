@@ -37,7 +37,8 @@
                     android:text="User Name"
                     android:textStyle="bold"
                     android:textColor="@color/Sapphire"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:id="@+id/userNameTextView"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -47,7 +48,9 @@
                     android:padding="5dp"
                     android:text="Full Name"
                     android:textColor="@color/Sapphire"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:id="@+id/fullNameTextView"
+                    />
 
                 <TextView
                     android:layout_width="match_parent"
@@ -57,7 +60,8 @@
                     android:padding="5dp"
                     android:text="Phone Number"
                     android:textColor="@color/Sapphire"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:id="@+id/phoneTextView"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -67,7 +71,8 @@
                     android:padding="5dp"
                     android:text="Complete Address"
                     android:textColor="@color/Sapphire"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:id="@+id/addressTextView"/>
 
 
 
