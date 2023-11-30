@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AdminAccountFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:layout_width="350dp"
+        android:layout_height="600dp"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:background="@drawable/sapphire_border"
+        android:backgroundTint="#80FFFFFF">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Admin Account"
+                android:textAlignment="center"
+                android:textColor="@color/Sapphire"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="30dp"
+                android:padding="5dp"
+                android:text="User Name"
+                android:textStyle="bold"
+                android:textColor="@color/Sapphire"
+                android:textSize="16sp"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                android:text="Phone Number"
+                android:textColor="@color/Sapphire"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                android:padding="5dp"
+                android:text="Complete Address"
+                android:textColor="@color/Sapphire"
+                android:textSize="16sp"/>
+
+
+
+
+            <Button
+                android:layout_width="300dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="100dp"
+                android:text="Edit Profile"
+                android:id="@+id/admin_edit_account"
+                android:textSize="18sp"
+                app:cornerRadius="30dp"
+                android:layout_gravity="center"/>
+
+            <Button
+                android:layout_width="300dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="5dp"
+                android:text="Log out"
+                android:id="@+id/admin_logBtn"
+                android:textSize="18sp"
+                app:cornerRadius="30dp"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+</FrameLayout>

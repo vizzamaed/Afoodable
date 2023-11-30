@@ -21,45 +21,51 @@
             android:backgroundTint="#80FFFFFF">
 
 
-            <ImageView
-                android:layout_width="130dp"
-                android:layout_height="130dp"
-                android:layout_marginTop="40dp"
-                android:background="@drawable/baseline_account_dp"
-                android:layout_gravity="center" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="Account"
+                android:textAlignment="center"
+                android:textColor="@color/Sapphire"
+                android:textSize="20dp" />
+
+            <EditText
+                android:id="@+id/searchBusinessName"
+                android:layout_width="300dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/skyblue_border"
+                android:drawablePadding="8dp"
+                android:hint="Business Name"
+                android:padding="8dp"
+                android:textColor="@color/grey" />
+
+            <Button
+                android:layout_width="300dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="20dp"
+                android:text="Business"
+                android:id="@+id/searchButton"
+                android:textSize="18sp"
+                app:cornerRadius="30dp"/>
+
+            <TextView
+                android:id="@+id/accountBusinessName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="30dp"
                 android:padding="5dp"
-                android:text="User Name"
+                android:text="Business Name"
                 android:textStyle="bold"
                 android:textColor="@color/Sapphire"
                 android:textSize="16sp"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="5dp"
-                android:padding="5dp"
-                android:text="Full Name"
-                android:textColor="@color/Sapphire"
-                android:textSize="16sp"/>
+
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="5dp"
-                android:padding="5dp"
-                android:text="Phone Number"
-                android:textColor="@color/Sapphire"
-                android:textSize="16sp"/>
-
-            <TextView
+                android:id="@+id/accountBusinessLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"

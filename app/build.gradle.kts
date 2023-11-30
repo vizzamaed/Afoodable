@@ -72,7 +72,6 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
-    implementation("androidx.core:core-ktx:+")
     implementation("com.google.gms:google-services:4.4.0")
 
 //firebase
