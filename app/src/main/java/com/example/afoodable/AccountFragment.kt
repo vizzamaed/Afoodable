@@ -36,6 +36,7 @@ class AccountFragment : Fragment() {
         val edit_Profile_button= view.findViewById<Button>(R.id.edit_Profile_button)
         val beSellerBtn= view.findViewById<Button>(R.id.beSellerBtn)
 
+
         edit_Profile_button.setOnClickListener {
             startActivity(Intent(context, ProfileSettings::class.java))
         }
@@ -44,6 +45,22 @@ class AccountFragment : Fragment() {
         sellerDashboard.setOnClickListener {
             startActivity(Intent(context, SellerDashboard::class.java))
         }
+
+        // Assuming you have a logout button with the ID "logoutBtn" in your XML layout file
+
+// Inside onViewCreated method after other button initializations
+        val logoutButton = view.findViewById<Button>(R.id.logoutBtn)
+
+        logoutButton.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+            val intent = Intent(requireContext(), LogInActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            requireActivity().finish()
+        }
+
+
+
 
         beSellerBtn.setOnClickListener {
             val builder = AlertDialog.Builder(requireContext())
@@ -59,6 +76,7 @@ class AccountFragment : Fragment() {
                 startActivity(Intent(requireContext(),SellerRegistration::class.java))
                 dialog.dismiss()
             }
+
             if (dialog.window != null){
                 dialog.window!!.setBackgroundDrawable(ColorDrawable(0))
             }

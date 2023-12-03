@@ -3,15 +3,9 @@ package com.example.dti_admin
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.service.autofill.UserData
 import android.widget.Toast
 import com.example.dti_admin.databinding.ActivityAddSellerAccountBinding
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import java.util.regex.Pattern
+import com.google.firebase.database.*
 
 class AddSellerAccountActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddSellerAccountBinding
@@ -31,37 +25,79 @@ class AddSellerAccountActivity : AppCompatActivity() {
             val dtiNumber = binding.dtiNumber.text.toString()
             val bfarNumber = binding.bfarNumber.text.toString()
 
-// Structure the path under "Users" -> "user's id" -> "sellerData" -> "businessName"
-            databaseReference =
-                FirebaseDatabase.getInstance().getReference("Users").child("Sellers").child(businessName)
+            val usersReference = FirebaseDatabase.getInstance().getReference("Users")
 
-            val sellers =
-                SellerData(
-                    businessName,
-                    sellerFullName,
-                    sellerEmail,
-                    businessLocation,
-                    tinNumber,
-                    dtiNumber,
-                    bfarNumber
-                )
-            databaseReference.setValue(sellers).addOnSuccessListener {
-                // Clear EditTexts
-                binding.businessName.text.clear()
-                binding.sellerFullName.text.clear()
-                binding.sellerEmail.text.clear()
-                binding.businessLocation.text.clear()
-                binding.tinNumber.text.clear()
-                binding.dtiNumber.text.clear()
-                binding.bfarNumber.text.clear()
+            // Check if the sellerEmail is not empty
+            if (sellerEmail.isNotEmpty()) {
+                usersReference.orderByChild("email").equalTo(sellerEmail)
+                    .addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                            for (userSnapshot in dataSnapshot.children) {
+                                val userKey = userSnapshot.key
 
-                Toast.makeText(this@AddSellerAccountActivity, "Saved", Toast.LENGTH_SHORT).show()
+                                // Structure the path under "Users" -> "user's id" -> "sellerData" -> "businessName"
+                                val userSellerDataReference = usersReference.child(userKey!!)
+                                    .child("zsellerData").child(businessName)
 
-                val intent = Intent(this@AddSellerAccountActivity, AdminManageFragment::class.java)
-                startActivity(intent)
-                finish()
-            }.addOnFailureListener {
-                Toast.makeText(this@AddSellerAccountActivity, "Failed", Toast.LENGTH_SHORT).show()
+                                val sellers = SellerData(
+                                    businessName,
+                                    sellerFullName,
+                                    sellerEmail,
+                                    businessLocation,
+                                    tinNumber,
+                                    dtiNumber,
+                                    bfarNumber
+                                )
+
+                                userSellerDataReference.setValue(sellers)
+                                    .addOnSuccessListener {
+                                        // Clear EditTexts
+                                        binding.businessName.text.clear()
+                                        binding.sellerFullName.text.clear()
+                                        binding.sellerEmail.text.clear()
+                                        binding.businessLocation.text.clear()
+                                        binding.tinNumber.text.clear()
+                                        binding.dtiNumber.text.clear()
+                                        binding.bfarNumber.text.clear()
+
+                                        Toast.makeText(
+                                            this@AddSellerAccountActivity,
+                                            "Saved",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+
+                                        val intent = Intent(
+                                            this@AddSellerAccountActivity,
+                                            AdminManageFragment::class.java
+                                        )
+                                        startActivity(intent)
+                                        finish()
+                                    }.addOnFailureListener {
+                                        Toast.makeText(
+                                            this@AddSellerAccountActivity,
+                                            "Failed",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                            }
+                        }
+
+                        override fun onCancelled(databaseError: DatabaseError) {
+                            // Handle any errors
+                            Toast.makeText(
+                                this@AddSellerAccountActivity,
+                                "Error: ${databaseError.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    })
+            } else {
+                // Handle case where sellerEmail is empty
+                Toast.makeText(
+                    this@AddSellerAccountActivity,
+                    "Seller email is empty",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

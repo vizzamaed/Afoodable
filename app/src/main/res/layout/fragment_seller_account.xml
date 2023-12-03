@@ -30,25 +30,7 @@
                 android:textColor="@color/Sapphire"
                 android:textSize="20dp" />
 
-            <EditText
-                android:id="@+id/searchBusinessName"
-                android:layout_width="300dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/skyblue_border"
-                android:drawablePadding="8dp"
-                android:hint="Business Name"
-                android:padding="8dp"
-                android:textColor="@color/grey" />
 
-            <Button
-                android:layout_width="300dp"
-                android:layout_height="70dp"
-                android:layout_marginTop="20dp"
-                android:text="Business"
-                android:id="@+id/searchButton"
-                android:textSize="18sp"
-                app:cornerRadius="30dp"/>
 
             <TextView
                 android:id="@+id/accountBusinessName"
@@ -71,7 +53,7 @@
                 android:gravity="center"
                 android:layout_marginTop="5dp"
                 android:padding="5dp"
-                android:text="Complete Address"
+                android:text="Business Location"
                 android:textColor="@color/Sapphire"
                 android:textSize="16sp"/>
 
@@ -92,6 +74,14 @@
                     android:id="@+id/buyerDashboardBtn"
                     android:textSize="18sp"
                     app:cornerRadius="30dp"/>
+            <Button
+                android:layout_width="300dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="5dp"
+                android:text="Log out"
+                android:id="@+id/logoutBtn"
+                android:textSize="18sp"
+                app:cornerRadius="30dp"/>
 
 
             </LinearLayout>

@@ -1,59 +1,137 @@
-package com.example.dti_admin
-
+import android.app.AlertDialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.Fragment
+import com.example.dti_admin.R
+import com.example.dti_admin.databinding.FragmentAdminInfoBinding
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [AdminInfoFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class AdminInfoFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentAdminInfoBinding
+    private var imageURL: String? = null
+    private var uri: Uri? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_admin_info, container, false)
+    ): View {
+        binding = FragmentAdminInfoBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AdminInfoFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AdminInfoFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val activityResultLauncher = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == android.app.Activity.RESULT_OK) {
+                val data = result.data
+                uri = data?.data
+                binding.uploadSIImage.setImageURI(uri)
+            } else {
+                Toast.makeText(requireContext(), "No Image Selected", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        binding.uploadSIImage.setOnClickListener {
+            val photoPicker = Intent(Intent.ACTION_PICK)
+            photoPicker.type = "image/*"
+            activityResultLauncher.launch(photoPicker)
+        }
+
+        binding.uploadSIBtn.setOnClickListener {
+            saveData()
+            binding.uploadSIImage.setImageResource(R.drawable.baseline_photo_size_select_actual_24)
+
+        }
+
+        binding.uploadSITextBtn.setOnClickListener {
+            val text=binding.uploadSIText.text.toString()
+            saveTextData(text)
+            binding.uploadSIText.text.clear()
+
+        }
+    }
+
+    private fun saveData() {
+        if (uri != null) {
+            val storageReference = FirebaseStorage.getInstance().reference
+                .child("Share Info Images")
+                .child(uri!!.lastPathSegment ?: "")
+
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setCancelable(false)
+            val dialogView = layoutInflater.inflate(R.layout.progress_layout, null)
+            builder.setView(dialogView)
+            val dialog = builder.create()
+            dialog.show()
+
+            val uploadTask = storageReference.putFile(uri!!)
+            uploadTask.continueWithTask { task ->
+                if (!task.isSuccessful) {
+                    task.exception?.let {
+                        throw it
+                    }
                 }
+                storageReference.downloadUrl
+            }.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val downloadUri = task.result
+                    imageURL = downloadUri.toString()
+                    // Push imageURL to Realtime Database
+                    pushToRealtimeDatabase(imageURL)
+                    Toast.makeText(requireContext(), "Image Uploaded Successfully", Toast.LENGTH_SHORT).show()
+
+                } else {
+                    Toast.makeText(requireContext(), "Upload Failed", Toast.LENGTH_SHORT).show()
+                }
+                dialog.dismiss()
+            }.addOnFailureListener {
+                Toast.makeText(requireContext(), "Error: ${it.message}", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+            }
+        } else {
+            Toast.makeText(requireContext(), "No Image Selected", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun pushToRealtimeDatabase(imageURL: String?) {
+            val databaseReference = FirebaseDatabase.getInstance().getReference("AdminData")
+                .child("ImageFolder").push().child("ImageURL")
+            databaseReference.setValue(imageURL)
+                .addOnSuccessListener {
+                    // Handle successful save to Realtime Database
+                    Toast.makeText(
+                        requireContext(),
+                        "Image Uploaded Successfully",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                .addOnFailureListener {
+                    // Handle failure in saving to Realtime Database
+                    Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show()
+                }
+    }
+
+    private fun saveTextData(text: String?) {
+        val databaseReference = FirebaseDatabase.getInstance().getReference("AdminData")
+            .child("TextFolder").push().child("TextInfo")
+
+        databaseReference.setValue(text)
+            .addOnSuccessListener {
+                Toast.makeText(requireContext(), "Text Posted Successfully", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(requireContext(), "Error: ${it.message}", Toast.LENGTH_SHORT).show()
             }
     }
 }

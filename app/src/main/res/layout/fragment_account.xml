@@ -21,13 +21,6 @@
                 android:backgroundTint="#80FFFFFF">
 
 
-                <ImageView
-                    android:layout_width="130dp"
-                    android:layout_height="130dp"
-                    android:layout_marginTop="40dp"
-                    android:background="@drawable/baseline_account_dp"
-                    android:layout_gravity="center" />
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -100,9 +93,18 @@
                     android:layout_width="300dp"
                     android:layout_height="70dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="20dp"
                     android:text="Be a Seller"
                     android:id="@+id/beSellerBtn"
+                    android:textSize="18sp"
+                    app:cornerRadius="30dp"
+                    android:layout_gravity="center"/>
+                <Button
+                    android:layout_width="300dp"
+                    android:layout_height="70dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="Log out"
+                    android:id="@+id/logoutBtn"
                     android:textSize="18sp"
                     app:cornerRadius="30dp"
                     android:layout_gravity="center"/>

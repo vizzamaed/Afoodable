@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.afoodable.databinding.FragmentSellerProductsBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -57,28 +58,36 @@ class SellerProductsFragment : Fragment() {
         dataList= ArrayList()
         adapter= MyAdapter(requireContext(), dataList)
         binding.recyclerView.adapter=adapter
-        databaseReference=FirebaseDatabase.getInstance().getReference("Inventory")
-        dialog.show()
 
-        eventListener=databaseReference!!.addValueEventListener(object :ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                dataList.clear()
-                for (itemSnapshot in snapshot.children){
-                    val dataClass=itemSnapshot.getValue(DataClass::class.java)
-                    if(dataClass!=null){
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val userId = currentUser?.uid
 
-                        dataList.add(dataClass)
+
+        if (userId != null) {
+            databaseReference=FirebaseDatabase.getInstance().getReference("Users").child(userId).child("zsellerData").child("Inventory")
+            dialog.show()
+
+            eventListener=databaseReference!!.addValueEventListener(object :ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    dataList.clear()
+                    for (itemSnapshot in snapshot.children){
+                        val dataClass=itemSnapshot.getValue(DataClass::class.java)
+                        if(dataClass!=null){
+
+                            dataList.add(dataClass)
+                        }
                     }
+                    adapter.notifyDataSetChanged()
+                    dialog.dismiss()
                 }
-                adapter.notifyDataSetChanged()
-                dialog.dismiss()
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                dialog.dismiss()
-            }
+                override fun onCancelled(error: DatabaseError) {
+                    dialog.dismiss()
+                }
 
-        })
+            })
+        }
+
 
 
 
@@ -111,3 +120,4 @@ class SellerProductsFragment : Fragment() {
         adapter.searchDataList(searchList)
     }
 }
+
