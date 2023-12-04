@@ -29,13 +29,14 @@
 
     <ScrollView
         android:layout_width="350dp"
-        android:layout_height="700dp"
+        android:layout_height="150dp"
         android:layout_marginLeft="24dp"
         android:orientation="vertical"
         android:padding="10dp"
         android:background="@drawable/skyblue_border"
         android:layout_below="@id/search"
-        android:backgroundTint="#80FFFFFF">
+        android:backgroundTint="#80FFFFFF"
+        android:id="@+id/InfoScroll">
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="wrap_content"
@@ -45,6 +46,27 @@
             tools:listitem="@layout/promo_item"
             android:gravity="start|center_vertical" />
 
+    </ScrollView>
+
+    <ScrollView
+        android:layout_width="350dp"
+        android:layout_height="400dp"
+        android:layout_marginLeft="24dp"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:background="@drawable/skyblue_border"
+        android:layout_below="@id/InfoScroll"
+        android:backgroundTint="#80FFFFFF"
+        android:layout_marginTop="25dp"
+        android:id="@+id/ProductScroll">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/recyclerViewProduct"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/product_item"
+            android:gravity="start|center_vertical" />
 
     </ScrollView>
 
