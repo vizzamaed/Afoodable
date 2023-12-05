@@ -136,7 +136,7 @@ class CreateSellerProducts : AppCompatActivity() {
 
         uid?.let { userUid ->
             val storesRef = FirebaseDatabase.getInstance().getReference("Stores")
-            val inventoryRef = storesRef.child("Inventory").child(uid) // Use itemName as a child node
+            val inventoryRef = storesRef.child("Inventory").child(uid).child(itemName) // Use itemName as a child node
             inventoryRef.setValue(dataClass)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {

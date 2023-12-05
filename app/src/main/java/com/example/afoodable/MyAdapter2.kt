@@ -43,6 +43,13 @@ class MyAdapter2 (private val productList: ArrayList<ProductsData>): RecyclerVie
 
 
     }
+
+    fun searchProductList(searchList: List<ProductsData>) {
+        productList.clear()
+        productList.addAll(searchList)
+        notifyDataSetChanged()
+    }
+
     class MyViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
         val productImage:ImageView=itemView.findViewById(R.id.recImageProduct)
         val productName:TextView=itemView.findViewById(R.id.recProductName)

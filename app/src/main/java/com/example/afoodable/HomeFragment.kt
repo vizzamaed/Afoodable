@@ -83,20 +83,24 @@ class HomeFragment : Fragment() {
 
 
     private fun getProductData() {
-        dbref = FirebaseDatabase.getInstance().getReference("Stores").child("Inventory")
+        val dbref = FirebaseDatabase.getInstance().getReference("Stores")
+            .child("Inventory")
 
         dbref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    for (productSnapshot in snapshot.children) {
-                        val product = productSnapshot.getValue(ProductsData::class.java)
-                        product?.let {
+                val productArrayList = ArrayList<ProductsData>() // Create a list to hold products
+
+                for (userSnapshot in snapshot.children) { // Iterate through each user node
+                    for (productSnapshot in userSnapshot.children) { // Iterate through products of each user
+                        val productData = productSnapshot.getValue(ProductsData::class.java)
+                        productData?.let {
                             productArrayList.add(it)
                         }
                     }
-                    // Assuming MyAdapter2 requires ArrayList<ProductsData> as a parameter
-                    productRecyclerView.adapter = MyAdapter2(productArrayList)
                 }
+
+                // Assuming MyAdapter2 requires ArrayList<ProductsData> as a parameter
+                productRecyclerView.adapter = MyAdapter2(productArrayList)
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -104,6 +108,7 @@ class HomeFragment : Fragment() {
             }
         })
     }
+
 
 
 

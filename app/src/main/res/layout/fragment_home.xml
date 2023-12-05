@@ -8,27 +8,54 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/search"
-        android:layout_width="match_parent"
+
+    <LinearLayout
+        android:id="@+id/head"
+        android:layout_width="410dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/skyblue_border"
-        android:focusable="false"
-        app:closeIcon="@drawable/baseline_clear_24"
-        app:iconifiedByDefault="false"
-        app:queryHint="Search Inventory"
-        app:searchHintIcon="@null"
-        app:searchIcon="@drawable/baseline_search_24" />
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/skyblue_border"
+            android:focusable="false"
+            app:closeIcon="@drawable/baseline_clear_24"
+            app:iconifiedByDefault="false"
+            app:queryHint="Search"
+            app:searchHintIcon="@null"
+            app:searchIcon="@drawable/baseline_search_24" />
+
+
+        <Button
+            android:id="@+id/sortUpBtn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:drawableLeft="@drawable/baseline_arrow_upward_24"
+            android:padding="20dp"
+            app:cornerRadius="100dp"/>
+
+        <Button
+            android:id="@+id/sortDownBtn"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:drawableLeft="@drawable/baseline_arrow_downward_24"
+            android:padding="20dp"
+            app:cornerRadius="100dp"/>
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="350dp"
         android:layout_height="150dp"
         android:id="@+id/recyclerViewPromo"
-        android:layout_below="@id/search"
+        android:layout_below="@id/head"
         android:layout_marginLeft="24dp"
         android:scrollbars="vertical"
         tools:listitem="@layout/promo_item"
@@ -46,6 +73,6 @@
         tools:listitem="@layout/product_item"
         android:background="@drawable/skyblue_border"
         android:backgroundTint="#80FFFFFF"
-        android:layout_marginTop="25dp" />
+        android:layout_marginTop="15dp" />
 
 </RelativeLayout>
