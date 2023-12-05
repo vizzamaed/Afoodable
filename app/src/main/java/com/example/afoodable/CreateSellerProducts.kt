@@ -102,6 +102,7 @@ class CreateSellerProducts : AppCompatActivity() {
                         .setValue(dataClass)
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
+                                saveDataToProducts()
                                 Toast.makeText(
                                     this@CreateSellerProducts,
                                     "Saved",
@@ -124,4 +125,36 @@ class CreateSellerProducts : AppCompatActivity() {
             })
         }
     }
+    private fun saveDataToProducts() {
+        val itemName = binding.uploadItemName.text.toString()
+        val itemDescription = binding.uploadItemDescription.text.toString()
+        val itemPrice = binding.uploadItemPrice.text.toString()
+
+        val dataClass = DataClass(itemName, itemDescription, itemPrice, imageURL)
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val uid = currentUser?.uid
+
+        uid?.let { userUid ->
+            val storesRef = FirebaseDatabase.getInstance().getReference("Stores")
+            val inventoryRef = storesRef.child("Inventory").child(uid) // Use itemName as a child node
+            inventoryRef.setValue(dataClass)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(
+                            this@CreateSellerProducts,
+                            "Saved",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        finish()
+                    }
+                }.addOnFailureListener { e ->
+                    Toast.makeText(
+                        this@CreateSellerProducts,
+                        e.message.toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+        }
+    }
+
 }

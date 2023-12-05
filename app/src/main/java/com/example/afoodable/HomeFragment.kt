@@ -1,5 +1,6 @@
 package com.example.afoodable
 
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.afoodable.databinding.FragmentHomeBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -20,9 +22,9 @@ class HomeFragment : Fragment() {
     private lateinit var imagesList: ArrayList<ShareInfoImage>
     private lateinit var databaseReference: DatabaseReference
 
-    private lateinit var productList: ArrayList<DataClass>
-    private lateinit var adapter2: MyAdapter2
-    var eventListener: ValueEventListener? = null
+    private lateinit var dbref: DatabaseReference
+    private lateinit var productRecyclerView: RecyclerView
+    private lateinit var productArrayList: ArrayList<ProductsData>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,10 +32,21 @@ class HomeFragment : Fragment() {
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
+
+
     }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        productRecyclerView = binding.recyclerViewProduct
+        productRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+        productRecyclerView.setHasFixedSize(true)
+
+        productArrayList = arrayListOf()
+        getProductData()
 
         val recyclerViewPromo = binding.recyclerViewPromo
         recyclerViewPromo.layoutManager = LinearLayoutManager(requireContext())
@@ -62,44 +75,39 @@ class HomeFragment : Fragment() {
             }
         })
 
+
         // Call Products() function when the view is created
-        Products()
     }
 
-    private fun Products() {
-        val gridLayoutManager = GridLayoutManager(requireContext(), 1)
-        binding.recyclerViewProduct.layoutManager = gridLayoutManager
 
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setCancelable(false)
-        builder.setView(R.layout.progress_layout)
-        val dialog = builder.create()
-        dialog.show()
 
-        productList = ArrayList()
-        adapter2 = MyAdapter2(requireContext(), productList)
-        binding.recyclerViewProduct.adapter = adapter2
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child("Inventory")
-        dialog.show()
 
-        eventListener = databaseReference.addValueEventListener(object : ValueEventListener {
+    private fun getProductData() {
+        dbref = FirebaseDatabase.getInstance().getReference("Stores").child("Inventory")
+
+        dbref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                productList.clear()
-                for (itemSnapshot in snapshot.children) {
-                    val dataClass = itemSnapshot.getValue(DataClass::class.java)
-                    dataClass?.let {
-                        productList.add(it)
+                if (snapshot.exists()) {
+                    for (productSnapshot in snapshot.children) {
+                        val product = productSnapshot.getValue(ProductsData::class.java)
+                        product?.let {
+                            productArrayList.add(it)
+                        }
                     }
+                    // Assuming MyAdapter2 requires ArrayList<ProductsData> as a parameter
+                    productRecyclerView.adapter = MyAdapter2(productArrayList)
                 }
-                adapter2.notifyDataSetChanged()
-                dialog.dismiss()
             }
 
             override fun onCancelled(error: DatabaseError) {
-                dialog.dismiss()
+                // Handle onCancelled
             }
         })
     }
+
+
+
+
 
 }
 
