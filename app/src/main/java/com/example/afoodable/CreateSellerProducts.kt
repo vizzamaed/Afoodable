@@ -10,7 +10,6 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import com.example.afoodable.databinding.ActivityCreateSellerProductsBinding
-import com.example.afoodable.databinding.ActivityProfileSettingsBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -54,26 +53,38 @@ class CreateSellerProducts : AppCompatActivity() {
     }
 
     private fun saveData() {
-        val storageReference = FirebaseStorage.getInstance().reference.child("Inventory Images")
-            .child(uri!!.lastPathSegment!!)
+        val itemPrice = binding.uploadItemPrice.text.toString()
 
-        val builder = AlertDialog.Builder(this@CreateSellerProducts)
-        builder.setCancelable(false)
-        builder.setView(R.layout.progress_layout)
-        val dialog = builder.create()
-        dialog.show()
+        // Validate if the input is a float
+        try {
+            val price = itemPrice.toFloat()
+            // If the conversion is successful, proceed with saving the data
+            val storageReference = FirebaseStorage.getInstance().reference.child("Inventory Images")
+                .child(uri!!.lastPathSegment!!)
 
-        storageReference.putFile(uri!!).addOnSuccessListener { taskSnapshot ->
-            val uriTask = taskSnapshot.storage.downloadUrl
-            while (!uriTask.isComplete);
-            val urlImage = uriTask.result
-            imageURL = urlImage.toString()
-            uploadData()
-            dialog.dismiss()
-        }.addOnFailureListener {
-            dialog.dismiss()
+            val builder = AlertDialog.Builder(this@CreateSellerProducts)
+            builder.setCancelable(false)
+            builder.setView(R.layout.progress_layout)
+            val dialog = builder.create()
+            dialog.show()
+
+            storageReference.putFile(uri!!).addOnSuccessListener { taskSnapshot ->
+                val uriTask = taskSnapshot.storage.downloadUrl
+                while (!uriTask.isComplete);
+                val urlImage = uriTask.result
+                imageURL = urlImage.toString()
+                uploadData()
+                dialog.dismiss()
+            }.addOnFailureListener {
+                dialog.dismiss()
+            }
+
+        } catch (e: NumberFormatException) {
+            // If the conversion fails, show an error message
+            Toast.makeText(this@CreateSellerProducts, "Please enter a valid float for item price", Toast.LENGTH_SHORT).show()
         }
     }
+
 
     private fun uploadData() {
         val itemName = binding.uploadItemName.text.toString()
@@ -86,14 +97,12 @@ class CreateSellerProducts : AppCompatActivity() {
         val currentUser = FirebaseAuth.getInstance().currentUser
         val uid = currentUser?.uid
 
-        // Get businessName from user data in Realtime Database
         uid?.let { userUid ->
             val userRef = FirebaseDatabase.getInstance().getReference("Users").child(userUid)
             userRef.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
                     val businessName = dataSnapshot.child("userData").child("zsellerData").value.toString()
 
-                    // Save inventory data under businessName
                     FirebaseDatabase.getInstance().getReference("Users")
                         .child(userUid)
                         .child("zsellerData")
@@ -120,7 +129,6 @@ class CreateSellerProducts : AppCompatActivity() {
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
-                    // Handle onCancelled
                 }
             })
         }
@@ -130,31 +138,50 @@ class CreateSellerProducts : AppCompatActivity() {
         val itemDescription = binding.uploadItemDescription.text.toString()
         val itemPrice = binding.uploadItemPrice.text.toString()
 
-        val dataClass = DataClass(itemName, itemDescription, itemPrice, imageURL)
         val currentUser = FirebaseAuth.getInstance().currentUser
         val uid = currentUser?.uid
 
         uid?.let { userUid ->
-            val storesRef = FirebaseDatabase.getInstance().getReference("Stores")
-            val inventoryRef = storesRef.child("Inventory").child(uid).child(itemName) // Use itemName as a child node
-            inventoryRef.setValue(dataClass)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        Toast.makeText(
-                            this@CreateSellerProducts,
-                            "Saved",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        finish()
-                    }
-                }.addOnFailureListener { e ->
-                    Toast.makeText(
-                        this@CreateSellerProducts,
-                        e.message.toString(),
-                        Toast.LENGTH_SHORT
-                    ).show()
+            val userRef = FirebaseDatabase.getInstance().getReference("Users").child(userUid)
+            userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val businessData = dataSnapshot.child("zsellerData").child("businessData")
+                    val businessName = businessData.child("businessName").value.toString()
+                    val businessLocation = businessData.child("businessLocation").value.toString()
+
+                    val inventoryRef = FirebaseDatabase.getInstance().getReference("Stores")
+                        .child("Inventory")
+                        .child(userUid)
+                        .child(itemName)
+
+                    val dataClass = DataClass(itemName, itemDescription, itemPrice, imageURL)
+                    dataClass.businessName = businessName
+                    dataClass.businessLocation = businessLocation
+
+                    inventoryRef.setValue(dataClass)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                Toast.makeText(
+                                    this@CreateSellerProducts,
+                                    "Saved",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                finish()
+                            }
+                        }.addOnFailureListener { e ->
+                            Toast.makeText(
+                                this@CreateSellerProducts,
+                                e.message.toString(),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                 }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                }
+            })
         }
+
     }
 
 }

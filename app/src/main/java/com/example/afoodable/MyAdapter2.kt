@@ -31,6 +31,8 @@ class MyAdapter2 (private val productList: ArrayList<ProductsData>): RecyclerVie
         holder.productName.text = currentItem.dataItemName
         holder.productPrice.text = currentItem.dataItemPrice
         holder.productDescription.text = currentItem.dataItemDescription
+        holder.businessName.text = currentItem.businessName
+        holder.businessLocation.text = currentItem.businessLocation
 
         holder.recCardProduct.setOnClickListener {
             val intent = Intent(holder.itemView.context, ViewProduct::class.java)
@@ -38,6 +40,8 @@ class MyAdapter2 (private val productList: ArrayList<ProductsData>): RecyclerVie
             intent.putExtra("Item Name", productList[holder.adapterPosition].dataItemName)
             intent.putExtra("Description", productList[holder.adapterPosition].dataItemDescription)
             intent.putExtra("Price", productList[holder.adapterPosition].dataItemPrice)
+            intent.putExtra("businessName", productList[holder.adapterPosition].businessName)
+            intent.putExtra("businessLocation", productList[holder.adapterPosition].businessLocation)
             holder.itemView.context.startActivity(intent)
         }
 
@@ -55,6 +59,8 @@ class MyAdapter2 (private val productList: ArrayList<ProductsData>): RecyclerVie
         val productName:TextView=itemView.findViewById(R.id.recProductName)
         val productPrice:TextView=itemView.findViewById(R.id.recProductPrice)
         val productDescription:TextView=itemView.findViewById(R.id.recProductDescription)
+        val businessName:TextView=itemView.findViewById(R.id.recBusinessName)
+        val businessLocation:TextView=itemView.findViewById(R.id.recBusinessLocation)
         val recCardProduct: CardView = itemView.findViewById(R.id.recCardProduct)
     }
 }

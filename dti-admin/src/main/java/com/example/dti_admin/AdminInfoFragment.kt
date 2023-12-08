@@ -87,7 +87,7 @@ class AdminInfoFragment : Fragment() {
                 if (task.isSuccessful) {
                     val downloadUri = task.result
                     imageURL = downloadUri.toString()
-                    // Push imageURL to Realtime Database
+
                     pushToRealtimeDatabase(imageURL)
                     Toast.makeText(requireContext(), "Image Uploaded Successfully", Toast.LENGTH_SHORT).show()
 
@@ -109,7 +109,7 @@ class AdminInfoFragment : Fragment() {
                 .child("ImageFolder").push().child("ImageURL")
             databaseReference.setValue(imageURL)
                 .addOnSuccessListener {
-                    // Handle successful save to Realtime Database
+
                     Toast.makeText(
                         requireContext(),
                         "Image Uploaded Successfully",
@@ -117,7 +117,7 @@ class AdminInfoFragment : Fragment() {
                     ).show()
                 }
                 .addOnFailureListener {
-                    // Handle failure in saving to Realtime Database
+
                     Toast.makeText(requireContext(), "Failed", Toast.LENGTH_SHORT).show()
                 }
     }

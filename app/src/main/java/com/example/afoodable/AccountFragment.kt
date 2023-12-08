@@ -46,9 +46,6 @@ class AccountFragment : Fragment() {
             startActivity(Intent(context, SellerDashboard::class.java))
         }
 
-        // Assuming you have a logout button with the ID "logoutBtn" in your XML layout file
-
-// Inside onViewCreated method after other button initializations
         val logoutButton = view.findViewById<Button>(R.id.logoutBtn)
 
         logoutButton.setOnClickListener {
@@ -99,7 +96,6 @@ class AccountFragment : Fragment() {
                     if (snapshot.exists()) {
                         val userData = snapshot.getValue(UserData::class.java)
 
-                        // Update TextViews with user data
                         view?.findViewById<TextView>(R.id.userNameTextView)?.text = userData?.userName ?: ""
                         view?.findViewById<TextView>(R.id.fullNameTextView)?.text = userData?.fullName ?: ""
                         view?.findViewById<TextView>(R.id.phoneTextView)?.text = userData?.phone ?: ""

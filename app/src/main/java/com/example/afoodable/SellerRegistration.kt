@@ -26,13 +26,12 @@ class SellerRegistration : AppCompatActivity() {
     private lateinit var sellerRegistrationBtn: Button
 
 
-    // Create a Retrofit instance for API communication
+
     private val retrofit = Retrofit.Builder()
         .baseUrl("https://docs.google.com/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
-    // Create an API interface using Retrofit
     private val api = retrofit.create(GoogleFormApi::class.java)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +40,6 @@ class SellerRegistration : AppCompatActivity() {
         init()
 
         sellerRegistrationBtn.setOnClickListener {
-            // Get user input from EditText fields
             val sFirstName = nameFirst.text.toString()
             val sLastName = nameLast.text.toString()
             val sEmail = maile.text.toString()
@@ -51,10 +49,8 @@ class SellerRegistration : AppCompatActivity() {
             val sDtiNumber = numberDTI.text.toString()
             val sBfarNumber = numberBFAR.text.toString()
 
-            // Create a call to send form data
             val call = api.sendFormData(sEmail, sFirstName, sLastName, sBusinessName, sBusinessLocation, sTinNumber, sDtiNumber,sBfarNumber)
 
-            // Execute the API call asynchronously
             call.enqueue(object : Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                     try {

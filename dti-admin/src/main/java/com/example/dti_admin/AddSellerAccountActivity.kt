@@ -1,5 +1,6 @@
 package com.example.dti_admin
 
+import SellerData
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -27,7 +28,7 @@ class AddSellerAccountActivity : AppCompatActivity() {
 
             val usersReference = FirebaseDatabase.getInstance().getReference("Users")
 
-            // Check if the sellerEmail is not empty
+
             if (sellerEmail.isNotEmpty()) {
                 usersReference.orderByChild("email").equalTo(sellerEmail)
                     .addListenerForSingleValueEvent(object : ValueEventListener {
@@ -35,9 +36,9 @@ class AddSellerAccountActivity : AppCompatActivity() {
                             for (userSnapshot in dataSnapshot.children) {
                                 val userKey = userSnapshot.key
 
-                                // Structure the path under "Users" -> "user's id" -> "sellerData" -> "businessName"
+
                                 val userSellerDataReference = usersReference.child(userKey!!)
-                                    .child("zsellerData").child(businessName)
+                                    .child("zsellerData").child("businessData")
 
                                 val sellers = SellerData(
                                     businessName,
@@ -49,38 +50,47 @@ class AddSellerAccountActivity : AppCompatActivity() {
                                     bfarNumber
                                 )
 
-                                userSellerDataReference.setValue(sellers)
-                                    .addOnSuccessListener {
-                                        // Clear EditTexts
-                                        binding.businessName.text.clear()
-                                        binding.sellerFullName.text.clear()
-                                        binding.sellerEmail.text.clear()
-                                        binding.businessLocation.text.clear()
-                                        binding.tinNumber.text.clear()
-                                        binding.dtiNumber.text.clear()
-                                        binding.bfarNumber.text.clear()
+                                if (sellers.isValid()) {
 
-                                        Toast.makeText(
-                                            this@AddSellerAccountActivity,
-                                            "Saved",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
+                                    userSellerDataReference.setValue(sellers)
+                                        .addOnSuccessListener {
+                                            binding.businessName.text.clear()
+                                            binding.sellerFullName.text.clear()
+                                            binding.sellerEmail.text.clear()
+                                            binding.businessLocation.text.clear()
+                                            binding.tinNumber.text.clear()
+                                            binding.dtiNumber.text.clear()
+                                            binding.bfarNumber.text.clear()
 
-                                        val intent = Intent(
-                                            this@AddSellerAccountActivity,
-                                            AdminManageFragment::class.java
-                                        )
-                                        startActivity(intent)
-                                        finish()
-                                    }.addOnFailureListener {
-                                        Toast.makeText(
-                                            this@AddSellerAccountActivity,
-                                            "Failed",
-                                            Toast.LENGTH_SHORT
-                                        ).show()
-                                    }
+                                            Toast.makeText(
+                                                this@AddSellerAccountActivity,
+                                                "Saved",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+
+                                            val intent = Intent(
+                                                this@AddSellerAccountActivity,
+                                                AdminManageFragment::class.java
+                                            )
+                                            startActivity(intent)
+                                            finish()
+                                        }.addOnFailureListener {
+                                            Toast.makeText(
+                                                this@AddSellerAccountActivity,
+                                                "Failed",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                    }else {
+                                    Toast.makeText(
+                                        this@AddSellerAccountActivity,
+                                        "Invalid input for tinNumber, dtiNumber, or bfarNumber",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+
+                                }
                             }
-                        }
 
                         override fun onCancelled(databaseError: DatabaseError) {
                             // Handle any errors
@@ -92,7 +102,7 @@ class AddSellerAccountActivity : AppCompatActivity() {
                         }
                     })
             } else {
-                // Handle case where sellerEmail is empty
+
                 Toast.makeText(
                     this@AddSellerAccountActivity,
                     "Seller email is empty",

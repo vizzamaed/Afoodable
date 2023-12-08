@@ -17,6 +17,5 @@ interface GoogleFormApi {
         @Field("entry.2007829283") sTinNumber: String,
         @Field("entry.1657170388") sDtiNumber: String,
         @Field("entry.439072922") sBfarNumber: String,
-        // if you have more questions you can add more here
     ): Call<Void>
 }

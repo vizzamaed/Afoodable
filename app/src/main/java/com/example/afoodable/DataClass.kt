@@ -5,6 +5,9 @@ class DataClass {
     var dataItemDescription: String?=null
     var dataItemPrice: String?=null
     var dataImage: String?=null
+    var businessName: String? = null
+    var businessLocation: String? = null
+
 
 
     constructor(dataItemName:String?, dataItemDescription:String?,dataItemPrice:String?,dataImage:String?) {

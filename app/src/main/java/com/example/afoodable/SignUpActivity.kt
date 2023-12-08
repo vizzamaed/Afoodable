@@ -71,15 +71,12 @@ class SignUpActivity : AppCompatActivity() {
 
         if (userId != null) {
             val userData = UserData(userId, fullname, username, phone, address, email, password)
-
-            // Use the Firebase Authentication UID as the ID
             databaseReference.child(userId).setValue(userData)
 
             Toast.makeText(this@SignUpActivity, "Signup Successful", Toast.LENGTH_SHORT).show()
             startActivity(Intent(this@SignUpActivity, LogInActivity::class.java))
             finish()
         } else {
-            // Handle the case where the user is not authenticated
             Toast.makeText(this@SignUpActivity, "User not authenticated", Toast.LENGTH_SHORT).show()
         }
     }

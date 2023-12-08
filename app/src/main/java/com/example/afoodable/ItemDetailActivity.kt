@@ -73,7 +73,7 @@ class ItemDetailActivity : AppCompatActivity() {
                                 Toast.LENGTH_SHORT
                             ).show()
                             dialog.dismiss()
-                            finish() // Finish the activity after deletion
+                            finish()
                         }
 
                         override fun onCancelled(error: DatabaseError) {

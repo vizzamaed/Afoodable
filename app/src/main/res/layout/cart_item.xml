@@ -74,6 +74,30 @@
             android:maxLines="0"
             android:layout_marginStart="20dp"/>
 
+        <TextView
+            android:layout_width="140dp"
+            android:layout_height="12dp"
+            android:id="@+id/recBusinessName"
+            android:text="businessName"
+            android:textColor="@color/Sapphire"
+            android:textSize="8sp"
+            android:layout_toEndOf="@+id/recImageProduct"
+            android:layout_below="@id/recProductPrice"
+            android:maxLines="0"
+            android:layout_marginStart="20dp"/>
+
+        <TextView
+            android:layout_width="140dp"
+            android:layout_height="12dp"
+            android:id="@+id/recBusinessLocation"
+            android:text="businessLocation"
+            android:textColor="@color/Sapphire"
+            android:textSize="8sp"
+            android:layout_toEndOf="@+id/recImageProduct"
+            android:layout_below="@id/recProductPrice"
+            android:maxLines="0"
+            android:layout_marginStart="20dp"/>
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

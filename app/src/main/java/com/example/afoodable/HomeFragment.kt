@@ -2,6 +2,7 @@ package com.example.afoodable
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,6 +42,8 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+
         productRecyclerView = binding.recyclerViewProduct
         productRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         productRecyclerView.setHasFixedSize(true)
@@ -64,49 +67,49 @@ class HomeFragment : Fragment() {
                     }
                     recyclerViewPromo.adapter = InfoAdapter(imagesList, requireContext())
                 } else {
-                    // Handle scenario where snapshot doesn't exist or contains no data
-                    // Show a placeholder or handle empty state
+                    //
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // Handle database error (if any)
+                //
                 Toast.makeText(requireContext(), error.toString(), Toast.LENGTH_SHORT).show()
             }
         })
-
-
-        // Call Products() function when the view is created
+        //
     }
 
 
 
 
     private fun getProductData() {
+
+
         val dbref = FirebaseDatabase.getInstance().getReference("Stores")
             .child("Inventory")
 
         dbref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val productArrayList = ArrayList<ProductsData>() // Create a list to hold products
+                val productArrayList = ArrayList<ProductsData>()
 
-                for (userSnapshot in snapshot.children) { // Iterate through each user node
-                    for (productSnapshot in userSnapshot.children) { // Iterate through products of each user
+                for (userSnapshot in snapshot.children) {
+                    for (productSnapshot in userSnapshot.children) {
                         val productData = productSnapshot.getValue(ProductsData::class.java)
                         productData?.let {
                             productArrayList.add(it)
                         }
+
                     }
                 }
 
-                // Assuming MyAdapter2 requires ArrayList<ProductsData> as a parameter
                 productRecyclerView.adapter = MyAdapter2(productArrayList)
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // Handle onCancelled
+
             }
         })
+
     }
 
 

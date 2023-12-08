@@ -31,6 +31,8 @@ class ViewProduct : AppCompatActivity() {
             binding.detailItemName.text = bundle.getString("Item Name")
             binding.detailItemPrice.text = bundle.getString("Price")
             binding.detailItemDescription.text = bundle.getString("Description")
+            binding.detailItemBusinessLocation.text = bundle.getString("businessLocation")
+            binding.detailItemBusinessName.text = bundle.getString("businessName")
             imageURL = bundle.getString("Image")!!
             Glide.with(this).load(bundle.getString("Image")).into(binding.detailImage)
 
@@ -44,7 +46,7 @@ class ViewProduct : AppCompatActivity() {
             val itemName = binding.detailItemName.text.toString()
             val itemPrice = binding.detailItemPrice.text.toString()
             val itemDescription = binding.detailItemDescription.text.toString()
-            val imageURL = imageURL // Assuming imageURL is a global variable
+            val imageURL = imageURL
 
             currentUser?.let { user ->
                 val userId = user.uid
@@ -57,7 +59,6 @@ class ViewProduct : AppCompatActivity() {
                 orderDetails["Description"] = itemDescription
                 orderDetails["Image"] = imageURL
 
-                // Set the order details under the item name as the key
                 databaseReference.child(itemName).setValue(orderDetails)
                     .addOnSuccessListener {
                         Toast.makeText(this@ViewProduct, "Item Added to Cart", Toast.LENGTH_SHORT).show()

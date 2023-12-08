@@ -96,23 +96,16 @@ class CartFragment : Fragment() {
                     }
                     recyclerViewPromo.adapter = InfoAdapter(imagesList, requireContext())
                 } else {
-                    // Handle scenario where snapshot doesn't exist or contains no data
-                    // Show a placeholder or handle empty state
+                  //
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // Handle database error (if any)
                 Toast.makeText(requireContext(), error.toString(), Toast.LENGTH_SHORT).show()
             }
         })
 
-
-        // Call Products() function when the view is created
     }
-
-
-
 
     private fun getProductData() {
         val currentUser = FirebaseAuth.getInstance().currentUser
@@ -155,5 +148,3 @@ class CartFragment : Fragment() {
 
 
 }
-
-
