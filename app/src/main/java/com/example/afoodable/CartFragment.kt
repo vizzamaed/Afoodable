@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.compose.material3.AlertDialog
@@ -43,35 +45,6 @@ class CartFragment : Fragment() {
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-        val placeItemBtn = view.findViewById<Button>(R.id.placeItemBtn)
-
-        placeItemBtn.setOnClickListener {
-            val builder = AlertDialog.Builder(requireContext())
-            val inflatedView = layoutInflater.inflate(R.layout.pickup_delivery_option, null)
-
-            builder.setView(inflatedView)
-            val dialog = builder.create()
-
-            val btnPickUp = inflatedView.findViewById<Button>(R.id.btnPickUp)
-            val btnDeliver = inflatedView.findViewById<Button>(R.id.btnDeliver)
-
-            btnPickUp.setOnClickListener {
-                dialog.dismiss()
-            }
-            btnDeliver.setOnClickListener {
-                dialog.dismiss()
-            }
-
-            if (dialog.window != null) {
-                dialog.window!!.setBackgroundDrawable(ColorDrawable(0))
-            }
-            dialog.show()
-        }
-
-
-
-        super.onViewCreated(view, savedInstanceState)
 
         productRecyclerView = binding.recyclerViewProduct
         productRecyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -113,33 +86,40 @@ class CartFragment : Fragment() {
 
         val dbref = FirebaseDatabase.getInstance().getReference("Users")
             .child(userId)
-            .child("Orders")
+            .child("Cart")
 
         dbref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val productArrayList = ArrayList<CartData>() // Create a list to hold products
+                val productArrayList = ArrayList<CartData>()
 
-                for (orderSnapshot in snapshot.children) { // Iterate through orders of the user
+                for (orderSnapshot in snapshot.children) {
                     val itemName = orderSnapshot.child("ItemName").getValue(String::class.java)
                     val itemDescription = orderSnapshot.child("Description").getValue(String::class.java)
                     val itemPrice = orderSnapshot.child("Price").getValue(String::class.java)
                     val itemImage = orderSnapshot.child("Image").getValue(String::class.java)
+                    //
+                    val businessName = orderSnapshot.child("businessName").getValue(String::class.java)
+                    val businessLocation = orderSnapshot.child("businessLocation").getValue(String::class.java)
 
                     itemName?.let { name ->
-                        val cartData = CartData(name, itemDescription, itemPrice, itemImage)
+                        val cartData = CartData(name, itemDescription, itemPrice, itemImage,businessName,businessLocation)
                         productArrayList.add(cartData)
                     }
                 }
 
-                // Assuming CartAdapter accepts ArrayList<CartData> as a parameter
                 productRecyclerView.adapter = CartAdapter(productArrayList)
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // Handle onCancelled
             }
         })
+
+
+
+
     }
+
+
 
 
 

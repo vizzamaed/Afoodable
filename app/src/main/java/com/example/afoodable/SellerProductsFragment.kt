@@ -91,7 +91,6 @@ class SellerProductsFragment : Fragment() {
 
 
 
-        // Access the button from the inflated layout
         binding.addItemBtn.setOnClickListener {
             val intent = Intent(requireContext(), CreateSellerProducts::class.java)
             startActivity(intent)

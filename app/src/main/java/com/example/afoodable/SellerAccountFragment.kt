@@ -48,4 +48,34 @@ class SellerAccountFragment : Fragment() {
 
     }
 
+    private fun fetchAndDisplayUserData(){
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val userId = currentUser?.uid
+
+        if (userId != null) {
+            val databaseReference = FirebaseDatabase.getInstance().reference.child("Users").child(userId).child("zsellerData")
+
+            databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        val SellerData = snapshot.getValue(SellerData::class.java)
+
+                        view?.findViewById<TextView>(R.id.accountBusinessName)?.text = SellerData?.businessName ?: ""
+                        view?.findViewById<TextView>(R.id.accountBusinessLocation)?.text = SellerData?.businessLocation ?: ""
+
+                    } else {
+                        Log.d("SellerAccountFragment", "Snapshot does not exist for user ID: $userId")
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e("SellerAccountFragment", "Database error: ${error.message}")
+                }
+            })
+        } else {
+            Log.e("SellerAccountFragment", "User not authenticated")
+        }
+
+    }
+
     }

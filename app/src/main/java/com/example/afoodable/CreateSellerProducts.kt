@@ -107,7 +107,7 @@ class CreateSellerProducts : AppCompatActivity() {
                         .child(userUid)
                         .child("zsellerData")
                         .child("Inventory")
-                        .child(itemName) // Use itemName as a child node
+                        .child(itemName)
                         .setValue(dataClass)
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
@@ -149,16 +149,15 @@ class CreateSellerProducts : AppCompatActivity() {
                     val businessName = businessData.child("businessName").value.toString()
                     val businessLocation = businessData.child("businessLocation").value.toString()
 
-                    val inventoryRef = FirebaseDatabase.getInstance().getReference("Stores")
-                        .child("Inventory")
+                    val productsRef = FirebaseDatabase.getInstance().getReference("Products")
                         .child(userUid)
-                        .child(itemName)
+                        .push()
 
                     val dataClass = DataClass(itemName, itemDescription, itemPrice, imageURL)
                     dataClass.businessName = businessName
                     dataClass.businessLocation = businessLocation
 
-                    inventoryRef.setValue(dataClass)
+                    productsRef.setValue(dataClass)
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
                                 Toast.makeText(
@@ -181,7 +180,7 @@ class CreateSellerProducts : AppCompatActivity() {
                 }
             })
         }
-
     }
+
 
 }

@@ -16,23 +16,15 @@
         android:layout_width="300dp"
         android:layout_height="160dp"
         android:id="@+id/above">
-        <CheckBox
-            android:id="@+id/checkBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true" />
 
-        <com.google.android.material.imageview.ShapeableImageView
+
+        <ImageView
             android:id="@+id/recImageProduct"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_toEndOf="@+id/checkBox"
-            android:layout_toRightOf="@+id/checkBox"
             android:padding="8dp"
             android:scaleType="centerCrop"
             android:src="@drawable/baseline_insert_photo_24"
@@ -106,10 +98,10 @@
             android:orientation="horizontal"
             android:layout_centerHorizontal="true"
             android:background="@drawable/skyblue_border"
-            android:layout_toEndOf="@+id/recImageProduct">
+            android:layout_toEndOf="@+id/recProductPrice">
 
             <ImageButton
-                android:id="@+id/decreaseButton"
+                android:id="@+id/decreaseBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/baseline_remove_circle_24"
@@ -128,7 +120,7 @@
                 android:layout_marginEnd="8dp" />
 
             <ImageButton
-                android:id="@+id/increaseButton"
+                android:id="@+id/increaseBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/baseline_add_circle_24"

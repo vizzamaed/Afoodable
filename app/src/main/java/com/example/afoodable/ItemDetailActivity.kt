@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.example.afoodable.databinding.ActivityItemDetailBinding
 import com.example.afoodable.databinding.FragmentSellerProductsBinding
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import java.text.DateFormat
 import com.google.firebase.database.ValueEventListener
@@ -57,35 +58,46 @@ class ItemDetailActivity : AppCompatActivity() {
             view.findViewById<Button>(R.id.btnDelete).setOnClickListener {
                 val bundle = intent.extras
                 val itemName = bundle?.getString("Item Name") ?: ""
-                val databaseReference = FirebaseDatabase.getInstance().getReference("Inventory")
 
-                // Query the item by name and delete it from the Firebase database
-                databaseReference.orderByChild("dataItemName").equalTo(itemName)
-                    .addListenerForSingleValueEvent(object : ValueEventListener {
-                        override fun onDataChange(snapshot: DataSnapshot) {
-                            for (itemSnapshot in snapshot.children) {
-                                // Remove the item from the database
-                                itemSnapshot.ref.removeValue()
+                val currentUser = FirebaseAuth.getInstance().currentUser
+                val uid = currentUser?.uid
+
+                deleteToProducts()
+
+                uid?.let { userUid ->
+                    val databaseReference =
+                        FirebaseDatabase.getInstance().getReference("Users").child(userUid)
+                            .child("zsellerData").child("Inventory")
+
+                    // Query the item by name and delete it from the Firebase database
+                    databaseReference.orderByChild("dataItemName").equalTo(itemName)
+                        .addListenerForSingleValueEvent(object : ValueEventListener {
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                for (itemSnapshot in snapshot.children) {
+                                    // Remove the item from the database
+                                    itemSnapshot.ref.removeValue()
+                                }
+                                Toast.makeText(
+                                    this@ItemDetailActivity,
+                                    "Item deleted successfully",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                dialog.dismiss()
+                                finish()
                             }
-                            Toast.makeText(
-                                this@ItemDetailActivity,
-                                "Item deleted successfully",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            dialog.dismiss()
-                            finish()
-                        }
 
-                        override fun onCancelled(error: DatabaseError) {
-                            Toast.makeText(
-                                this@ItemDetailActivity,
-                                "Failed to delete item",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            dialog.dismiss()
-                        }
-                    })
+                            override fun onCancelled(error: DatabaseError) {
+                                Toast.makeText(
+                                    this@ItemDetailActivity,
+                                    "Failed to delete item",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                dialog.dismiss()
+                            }
+                        })
+                }
             }
+
 
             view.findViewById<Button>(R.id.btnCancel).setOnClickListener {
                 dialog.dismiss()
@@ -98,6 +110,53 @@ class ItemDetailActivity : AppCompatActivity() {
         }
 
 
+
+    }
+
+    private fun deleteToProducts() {
+        val builder = AlertDialog.Builder(this)
+        val view = layoutInflater.inflate(R.layout.dialog_delete_item, null)
+
+        builder.setView(view)
+        val dialog = builder.create()
+
+        val bundle = intent.extras
+        val itemName = bundle?.getString("Item Name") ?: ""
+
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val uid = currentUser?.uid
+
+
+        uid?.let { userUid ->
+            val databaseReference =
+                FirebaseDatabase.getInstance().getReference("Products").child(userUid)
+
+            // Query the item by name and delete it from the Firebase database
+            databaseReference.orderByChild("dataItemName").equalTo(itemName)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        for (itemSnapshot in snapshot.children) {
+                            itemSnapshot.ref.removeValue()
+                        }
+                        Toast.makeText(
+                            this@ItemDetailActivity,
+                            "Item deleted successfully",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        dialog.dismiss()
+                        finish()
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        Toast.makeText(
+                            this@ItemDetailActivity,
+                            "Failed to delete item",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        dialog.dismiss()
+                    }
+                })
+        }
 
     }
 

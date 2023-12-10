@@ -1,6 +1,7 @@
 package com.example.afoodable
 
 data class ProductsData (
+    var productId: String? = null,
     var dataItemName: String?=null,
     var dataItemDescription: String?=null,
     var dataItemPrice: String?=null,

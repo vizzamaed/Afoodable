@@ -26,21 +26,13 @@
                 android:textColor="@color/Sapphire"
                 android:textSize="20dp" />
 
-            <ImageView
-                android:id="@+id/uploadDP"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_gravity="center"
-                android:layout_margin="20dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/baseline_account_dp"/>
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:id="@+id/editFullName"
                 android:background="@drawable/skyblue_border"
-                android:layout_marginTop="0dp"
+                android:layout_marginTop="15dp"
                 android:padding="16dp"
                 android:hint="Full Name"
                 android:gravity="start|center_vertical"/>

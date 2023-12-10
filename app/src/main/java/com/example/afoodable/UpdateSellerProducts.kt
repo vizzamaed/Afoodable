@@ -57,7 +57,7 @@ class UpdateSellerProducts : AppCompatActivity() {
         }
 
         uid?.let { userUid ->
-            databaseReference = FirebaseDatabase.getInstance().getReference("Stores").child("Inventory").child(userUid)
+            databaseReference = FirebaseDatabase.getInstance().getReference("Products").child(userUid)
             val DataClass = mapOf<String, String>(
                 "dataItemDescription" to itemDescription,
                 "dataItemPrice" to itemPrice
@@ -70,7 +70,7 @@ class UpdateSellerProducts : AppCompatActivity() {
                 binding.editItemDescription.text.clear()
                 binding.editItemPrice.text.clear()
 
-                Toast.makeText(this, "Updated to Stores", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Updated to Products", Toast.LENGTH_SHORT).show()
             }.addOnFailureListener {
                 Toast.makeText(this, "Unable to Update", Toast.LENGTH_SHORT).show()
             }

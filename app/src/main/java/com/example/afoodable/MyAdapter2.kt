@@ -42,6 +42,7 @@ class MyAdapter2 (private val productList: ArrayList<ProductsData>): RecyclerVie
             intent.putExtra("Price", productList[holder.adapterPosition].dataItemPrice)
             intent.putExtra("businessName", productList[holder.adapterPosition].businessName)
             intent.putExtra("businessLocation", productList[holder.adapterPosition].businessLocation)
+            intent.putExtra("Product ID", currentItem.productId) // Include Product ID here
             holder.itemView.context.startActivity(intent)
         }
 

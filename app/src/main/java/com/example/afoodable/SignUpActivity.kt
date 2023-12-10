@@ -40,6 +40,7 @@ class SignUpActivity : AppCompatActivity() {
 
             if(fullname.isNotEmpty()&&username.isNotEmpty()&&phone.isNotEmpty()&&address.isNotEmpty()&&email.isNotEmpty()&& password.isNotEmpty()&&confirmPassword.isNotEmpty()){
                 if(password==confirmPassword){
+                    if (phone.length <= 12){
 
                     firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener{
                         if(it.isSuccessful){
@@ -49,6 +50,9 @@ class SignUpActivity : AppCompatActivity() {
                         }else{
                             Toast.makeText(this, it.exception.toString(), Toast.LENGTH_SHORT).show()
                         }
+                    }
+                    }else{
+                        Toast.makeText(this, "Invalid phone number", Toast.LENGTH_SHORT).show()
                     }
                 }else{
                     Toast.makeText(this, "Password does not matched", Toast.LENGTH_SHORT).show()

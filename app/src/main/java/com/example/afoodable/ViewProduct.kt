@@ -39,27 +39,37 @@ class ViewProduct : AppCompatActivity() {
         }
 
 
-            val auth = FirebaseAuth.getInstance()
-            val currentUser = auth.currentUser
+        val auth = FirebaseAuth.getInstance()
+        val currentUser = auth.currentUser
 
         binding.addToCartBtn.setOnClickListener {
             val itemName = binding.detailItemName.text.toString()
             val itemPrice = binding.detailItemPrice.text.toString()
             val itemDescription = binding.detailItemDescription.text.toString()
             val imageURL = imageURL
+            //
+            val businessName = binding.detailItemBusinessName.text.toString()
+            val businessLocation = binding.detailItemBusinessLocation.text.toString()
+            //
+            val productID = intent.getStringExtra("Product ID")
 
             currentUser?.let { user ->
                 val userId = user.uid
 
-                val databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userId).child("Orders")
+                val databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userId).child("Cart")
 
                 val orderDetails = HashMap<String, Any>()
                 orderDetails["ItemName"] = itemName
                 orderDetails["Price"] = itemPrice
                 orderDetails["Description"] = itemDescription
                 orderDetails["Image"] = imageURL
+                //
+                orderDetails["businessName"] = businessName
+                orderDetails["businessLocation"] = businessLocation
 
-                databaseReference.child(itemName).setValue(orderDetails)
+                productID?.let { productId ->
+                    val productRef = databaseReference.child(productId)
+                    productRef.setValue(orderDetails)
                     .addOnSuccessListener {
                         Toast.makeText(this@ViewProduct, "Item Added to Cart", Toast.LENGTH_SHORT).show()
                         finish()
@@ -68,18 +78,19 @@ class ViewProduct : AppCompatActivity() {
                         Toast.makeText(this@ViewProduct, "Failed to add item to cart", Toast.LENGTH_SHORT).show()
                     }
             }
+                }
 
 
 
-        val builder = AlertDialog.Builder(this)
-                val view = layoutInflater.inflate(R.layout.dialog_delete_item, null)
-                builder.setView(view)
-                val dialog = builder.create()
+            val builder = AlertDialog.Builder(this)
+            val view = layoutInflater.inflate(R.layout.dialog_delete_item, null)
+            builder.setView(view)
+            val dialog = builder.create()
 
-                Toast.makeText(this@ViewProduct, "Item Added to Cart", Toast.LENGTH_SHORT).show()
-                dialog.dismiss()
-                finish()
-            }
+            Toast.makeText(this@ViewProduct, "Item Added to Cart", Toast.LENGTH_SHORT).show()
+            dialog.dismiss()
+            finish()
+        }
 
 
 
