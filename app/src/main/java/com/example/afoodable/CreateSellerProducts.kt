@@ -101,61 +101,23 @@ class CreateSellerProducts : AppCompatActivity() {
             val userRef = FirebaseDatabase.getInstance().getReference("Users").child(userUid)
             userRef.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    val businessName = dataSnapshot.child("userData").child("zsellerData").value.toString()
-
-                    FirebaseDatabase.getInstance().getReference("Users")
-                        .child(userUid)
-                        .child("zsellerData")
-                        .child("Inventory")
-                        .child(itemName)
-                        .setValue(dataClass)
-                        .addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                saveDataToProducts()
-                                Toast.makeText(
-                                    this@CreateSellerProducts,
-                                    "Saved",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                finish()
-                            }
-                        }.addOnFailureListener { e ->
-                            Toast.makeText(
-                                this@CreateSellerProducts,
-                                e.message.toString(),
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                }
-
-                override fun onCancelled(databaseError: DatabaseError) {
-                }
-            })
-        }
-    }
-    private fun saveDataToProducts() {
-        val itemName = binding.uploadItemName.text.toString()
-        val itemDescription = binding.uploadItemDescription.text.toString()
-        val itemPrice = binding.uploadItemPrice.text.toString()
-
-        val currentUser = FirebaseAuth.getInstance().currentUser
-        val uid = currentUser?.uid
-
-        uid?.let { userUid ->
-            val userRef = FirebaseDatabase.getInstance().getReference("Users").child(userUid)
-            userRef.addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
                     val businessData = dataSnapshot.child("zsellerData").child("businessData")
                     val businessName = businessData.child("businessName").value.toString()
                     val businessLocation = businessData.child("businessLocation").value.toString()
 
-                    val productsRef = FirebaseDatabase.getInstance().getReference("Products")
-                        .child(userUid)
+                    val productsRef = FirebaseDatabase.getInstance().getReference("Users")
+                        .child(userUid).child("zsellerData").child("Inventory")
                         .push()
+
+                    // Generate a unique ProductID using the push key
+                    val productID = productsRef.key
 
                     val dataClass = DataClass(itemName, itemDescription, itemPrice, imageURL)
                     dataClass.businessName = businessName
                     dataClass.businessLocation = businessLocation
+                    dataClass.productID = productID // Include ProductID in DataClass
+
+                    saveDataToProducts(dataClass) // Pass the dataClass object with productID to saveDataToProducts()
 
                     productsRef.setValue(dataClass)
                         .addOnCompleteListener { task ->
@@ -177,10 +139,51 @@ class CreateSellerProducts : AppCompatActivity() {
                 }
 
                 override fun onCancelled(databaseError: DatabaseError) {
+                    // Handle cancellation if needed
                 }
             })
         }
     }
+
+    private fun saveDataToProducts(dataClass: DataClass) {
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val uid = currentUser?.uid
+
+        uid?.let { userUid ->
+            val userRef = FirebaseDatabase.getInstance().getReference("Users").child(userUid)
+            userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val productsRef = FirebaseDatabase.getInstance().getReference("Products")
+                        .child(userUid)
+                        .child(dataClass.productID ?: "")
+
+                    productsRef.setValue(dataClass)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                Toast.makeText(
+                                    this@CreateSellerProducts,
+                                    "Saved",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                finish()
+                            }
+                        }.addOnFailureListener { e ->
+                            Toast.makeText(
+                                this@CreateSellerProducts,
+                                e.message.toString(),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    // Handle cancellation if needed
+                }
+            })
+        }
+    }
+
+
 
 
 }

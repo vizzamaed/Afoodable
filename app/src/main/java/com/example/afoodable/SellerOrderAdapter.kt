@@ -6,8 +6,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
@@ -15,12 +13,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
 
-class CartAdapter (private val productList: ArrayList<ProductsData>): RecyclerView.Adapter<CartAdapter.MyViewHolder>(){
+class SellerOrderAdapter (private val productList: ArrayList<ProductsData>): RecyclerView.Adapter<SellerOrderAdapter.MyViewHolder>(){
 
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val itemView=LayoutInflater.from(parent.context).inflate(R.layout.cart_item,parent,false)
+        val itemView=LayoutInflater.from(parent.context).inflate(R.layout.seller_order_item,parent,false)
         return MyViewHolder(itemView)
     }
 
@@ -30,10 +28,6 @@ class CartAdapter (private val productList: ArrayList<ProductsData>): RecyclerVi
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentItem = productList[position]
-
-        Log.d("CartAdapter", "Position: $position")
-        Log.d("CartAdapter", "ItemName: ${currentItem.dataItemName}")
-        Log.d("CartAdapter", "ItemPrice: ${currentItem.dataItemPrice}")
         Glide.with(holder.productImage.context).load(currentItem.dataImage).into(holder.productImage)
         holder.productName.text = currentItem.dataItemName
         holder.productPrice.text = currentItem.dataItemPrice
@@ -41,21 +35,28 @@ class CartAdapter (private val productList: ArrayList<ProductsData>): RecyclerVi
         holder.businessName.text = currentItem.businessName
         holder.businessLocation.text = currentItem.businessLocation
 
-
-
         holder.recCardProduct.setOnClickListener {
-            val intent = Intent(holder.itemView.context, ViewCart::class.java)
-            intent.putExtra("ProductID", productList[holder.adapterPosition].productID)
+            val intent = Intent(holder.itemView.context, ViewSellerOrder::class.java)
             intent.putExtra("Image", productList[holder.adapterPosition].dataImage)
             intent.putExtra("Item Name", productList[holder.adapterPosition].dataItemName)
             intent.putExtra("Description", productList[holder.adapterPosition].dataItemDescription)
             intent.putExtra("Price", productList[holder.adapterPosition].dataItemPrice)
             intent.putExtra("businessName", productList[holder.adapterPosition].businessName)
             intent.putExtra("businessLocation", productList[holder.adapterPosition].businessLocation)
+            intent.putExtra("ProductID", productList[holder.adapterPosition].productID)
+
+
+            // Include Product ID here
             holder.itemView.context.startActivity(intent)
         }
 
 
+    }
+
+    fun searchProductList(searchList: List<ProductsData>) {
+        productList.clear()
+        productList.addAll(searchList)
+        notifyDataSetChanged()
     }
 
     class MyViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
@@ -63,7 +64,6 @@ class CartAdapter (private val productList: ArrayList<ProductsData>): RecyclerVi
         val productName:TextView=itemView.findViewById(R.id.recProductName)
         val productPrice:TextView=itemView.findViewById(R.id.recProductPrice)
         val productDescription:TextView=itemView.findViewById(R.id.recProductDescription)
-        //
         val businessName:TextView=itemView.findViewById(R.id.recBusinessName)
         val businessLocation:TextView=itemView.findViewById(R.id.recBusinessLocation)
         val recCardProduct: CardView = itemView.findViewById(R.id.recCardProduct)

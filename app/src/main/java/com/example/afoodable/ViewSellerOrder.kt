@@ -8,22 +8,23 @@ import androidx.appcompat.app.AlertDialog
 import com.bumptech.glide.Glide
 import com.example.afoodable.databinding.ActivityItemDetailBinding
 import com.example.afoodable.databinding.ActivityViewProductBinding
+import com.example.afoodable.databinding.ActivityViewSellerOrderBinding
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.auth.FirebaseAuth
 
-class ViewProduct : AppCompatActivity() {
+class ViewSellerOrder : AppCompatActivity() {
     var imageURL = ""
     var productID: String = ""
 
 
-    private lateinit var binding: ActivityViewProductBinding
+    private lateinit var binding: ActivityViewSellerOrderBinding
     private lateinit var databaseReference: DatabaseReference
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityViewProductBinding.inflate(layoutInflater)
+        binding = ActivityViewSellerOrderBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 
@@ -46,7 +47,7 @@ class ViewProduct : AppCompatActivity() {
         val currentUser = auth.currentUser
 
         // Inside addToCartBtn click listener in ViewProduct class
-        binding.addToCartBtn.setOnClickListener {
+        binding.accept.setOnClickListener {
             val itemName = binding.detailItemName.text.toString()
             val itemPrice = binding.detailItemPrice.text.toString()
             val itemDescription = binding.detailItemDescription.text.toString()
@@ -70,11 +71,11 @@ class ViewProduct : AppCompatActivity() {
                     // Set the order details under the item name as the key
                     databaseReference.child(productID).setValue(orderDetails)
                         .addOnSuccessListener {
-                            Toast.makeText(this@ViewProduct, "Item Added to Cart", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@ViewSellerOrder, "Item Added to Cart", Toast.LENGTH_SHORT).show()
                             finish()
                         }
                         .addOnFailureListener {
-                            Toast.makeText(this@ViewProduct, "Failed to add item to cart", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@ViewSellerOrder, "Failed to add item to cart", Toast.LENGTH_SHORT).show()
                         }
                 }
         }
@@ -82,7 +83,7 @@ class ViewProduct : AppCompatActivity() {
 
 
 
-        binding.backBtn.setOnClickListener {
+        binding.reject.setOnClickListener {
             finish()
         }
     }

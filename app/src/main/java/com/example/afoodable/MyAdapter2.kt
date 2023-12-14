@@ -2,6 +2,7 @@ package com.example.afoodable
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,7 +43,10 @@ class MyAdapter2 (private val productList: ArrayList<ProductsData>): RecyclerVie
             intent.putExtra("Price", productList[holder.adapterPosition].dataItemPrice)
             intent.putExtra("businessName", productList[holder.adapterPosition].businessName)
             intent.putExtra("businessLocation", productList[holder.adapterPosition].businessLocation)
-            intent.putExtra("Product ID", currentItem.productId) // Include Product ID here
+            intent.putExtra("ProductID", productList[holder.adapterPosition].productID)
+
+
+            // Include Product ID here
             holder.itemView.context.startActivity(intent)
         }
 

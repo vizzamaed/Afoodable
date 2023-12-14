@@ -30,7 +30,7 @@ class CartFragment : Fragment() {
 
     private lateinit var dbref: DatabaseReference
     private lateinit var productRecyclerView: RecyclerView
-    private lateinit var productArrayList: ArrayList<CartData>
+    private lateinit var productArrayList: ArrayList<ProductsData>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,7 +69,7 @@ class CartFragment : Fragment() {
                     }
                     recyclerViewPromo.adapter = InfoAdapter(imagesList, requireContext())
                 } else {
-                  //
+                    //
                 }
             }
 
@@ -90,34 +90,32 @@ class CartFragment : Fragment() {
 
         dbref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                val productArrayList = ArrayList<CartData>()
+                val productArrayList = ArrayList<ProductsData>()
 
                 for (orderSnapshot in snapshot.children) {
-                    val itemName = orderSnapshot.child("ItemName").getValue(String::class.java)
                     val itemDescription = orderSnapshot.child("Description").getValue(String::class.java)
-                    val itemPrice = orderSnapshot.child("Price").getValue(String::class.java)
                     val itemImage = orderSnapshot.child("Image").getValue(String::class.java)
-                    //
-                    val businessName = orderSnapshot.child("businessName").getValue(String::class.java)
+                    val itemName = orderSnapshot.child("ItemName").getValue(String::class.java)
+                    val itemPrice = orderSnapshot.child("Price").getValue(String::class.java)
                     val businessLocation = orderSnapshot.child("businessLocation").getValue(String::class.java)
+                    val businessName = orderSnapshot.child("businessName").getValue(String::class.java)
+                    val productID = orderSnapshot.key //
 
-                    itemName?.let { name ->
-                        val cartData = CartData(name, itemDescription, itemPrice, itemImage,businessName,businessLocation)
-                        productArrayList.add(cartData)
-                    }
+
+                    val productsData = ProductsData(productID ?: "",itemName, itemDescription, itemPrice, itemImage, businessName, businessLocation)
+                    productArrayList.add(productsData)
+
                 }
 
                 productRecyclerView.adapter = CartAdapter(productArrayList)
             }
 
             override fun onCancelled(error: DatabaseError) {
+
             }
         })
-
-
-
-
     }
+
 
 
 

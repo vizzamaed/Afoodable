@@ -31,8 +31,8 @@
             android:textColor="@color/Sapphire"/>
 
         <ImageView
-            android:layout_width="180dp"
-            android:layout_height="180dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:id="@+id/detailImage"
             android:padding="2dp"
             android:layout_gravity="center"
@@ -42,7 +42,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp"
+            android:padding="10dp"
             android:text="Price"
             android:layout_gravity="center"
             android:id="@+id/detailItemPrice"
@@ -54,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:padding="15dp"
+            android:padding="10dp"
             android:text="Description"
             android:textColor="@color/Sapphire"
             android:textSize="18sp" />
@@ -64,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:padding="15dp"
+            android:padding="10dp"
             android:text="businessName"
             android:textColor="@color/Sapphire"
             android:textSize="18sp" />
@@ -74,10 +74,91 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:padding="15dp"
+            android:padding="10dp"
             android:text="businessLocation"
             android:textColor="@color/Sapphire"
             android:textSize="18sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/totalPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:text="TOTAL"
+                android:textColor="@color/Sapphire"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/totalPriceTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:textColor="@color/Sapphire"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_marginStart="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Voucher Code:"/>
+
+            <EditText
+                android:layout_width="120dp"
+                android:layout_height="30dp"
+                android:background="@drawable/skyblue_border"
+                android:layout_gravity="center_vertical"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/detailItemBusinessLocation"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/skyblue_border"
+            android:layout_gravity="center">
+
+            <ImageButton
+                android:id="@+id/decreaseBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_remove_circle_24"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:rotation="180"/>
+
+
+            <TextView
+                android:id="@+id/quantityTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:textSize="18sp"
+                android:textColor="@color/Sapphire"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp" />
+
+            <ImageButton
+                android:id="@+id/increaseBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_add_circle_24"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:rotation="180" />
+        </LinearLayout>
+
 
         <!-- Buttons in a horizontal layout -->
         <LinearLayout
