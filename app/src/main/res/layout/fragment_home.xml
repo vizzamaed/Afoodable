@@ -19,7 +19,7 @@
 
         <androidx.appcompat.widget.SearchView
             android:id="@+id/search"
-            android:layout_width="250dp"
+            android:layout_width="280dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="20dp"
@@ -36,19 +36,12 @@
 
         <Button
             android:id="@+id/sortUpBtn"
-            android:layout_width="50dp"
+            android:layout_width="60dp"
             android:layout_height="50dp"
-            android:drawableLeft="@drawable/baseline_arrow_upward_24"
+            android:drawableLeft="@drawable/baseline_compare_arrows_24"
             android:padding="20dp"
             app:cornerRadius="100dp"/>
 
-        <Button
-            android:id="@+id/sortDownBtn"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:drawableLeft="@drawable/baseline_arrow_downward_24"
-            android:padding="20dp"
-            app:cornerRadius="100dp"/>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

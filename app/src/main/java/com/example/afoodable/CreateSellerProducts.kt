@@ -150,38 +150,34 @@ class CreateSellerProducts : AppCompatActivity() {
         val uid = currentUser?.uid
 
         uid?.let { userUid ->
-            val userRef = FirebaseDatabase.getInstance().getReference("Users").child(userUid)
-            userRef.addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    val productsRef = FirebaseDatabase.getInstance().getReference("Products")
-                        .child(userUid)
-                        .child(dataClass.productID ?: "")
+            val productsRef = FirebaseDatabase.getInstance()
+                .getReference("Products")
+                .child(userUid) // Reference under current user's ID
+                .child(dataClass.productID ?: "") // Child under productID
 
-                    productsRef.setValue(dataClass)
-                        .addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                Toast.makeText(
-                                    this@CreateSellerProducts,
-                                    "Saved",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                finish()
-                            }
-                        }.addOnFailureListener { e ->
-                            Toast.makeText(
-                                this@CreateSellerProducts,
-                                e.message.toString(),
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                }
+            // Include the user ID in the data before saving
+            dataClass.sellerID = userUid
 
-                override fun onCancelled(databaseError: DatabaseError) {
-                    // Handle cancellation if needed
+            productsRef.setValue(dataClass)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(
+                            this@CreateSellerProducts,
+                            "Saved",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        finish()
+                    }
+                }.addOnFailureListener { e ->
+                    Toast.makeText(
+                        this@CreateSellerProducts,
+                        e.message.toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-            })
         }
     }
+
 
 
 

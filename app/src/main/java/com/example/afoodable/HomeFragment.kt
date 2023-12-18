@@ -6,8 +6,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.SearchView
 import androidx.compose.material3.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -16,16 +18,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.afoodable.databinding.FragmentHomeBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import java.util.Locale
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var imagesList: ArrayList<ShareInfoImage>
     private lateinit var databaseReference: DatabaseReference
-
     private lateinit var dbref: DatabaseReference
     private lateinit var productRecyclerView: RecyclerView
     private lateinit var productArrayList: ArrayList<ProductsData>
+    private lateinit var adapter: MyAdapter2
+    private lateinit var searchView: SearchView
+    private lateinit var originalList: ArrayList<ProductsData>
+    //
+    private var sortCount = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,6 +56,7 @@ class HomeFragment : Fragment() {
         productRecyclerView.setHasFixedSize(true)
 
         productArrayList = arrayListOf()
+
         getProductData()
 
         val recyclerViewPromo = binding.recyclerViewPromo
@@ -77,7 +85,33 @@ class HomeFragment : Fragment() {
             }
         })
         //
+        //
+        val sortUpBtn: Button = binding.sortUpBtn
+        sortUpBtn.setOnClickListener {
+            sortCount++
+            sortProductList()
+        }
     }
+
+    /////
+    private fun sortProductList() {
+        when (sortCount % 3) {
+            1 -> {
+                // Sort from lowest to highest
+                productArrayList.sortBy { it.dataItemPrice?.toFloatOrNull() ?: Float.MAX_VALUE }
+            }
+            2 -> {
+                // Sort from highest to lowest
+                productArrayList.sortByDescending { it.dataItemPrice?.toFloatOrNull() ?: Float.MIN_VALUE }
+            }
+            else -> {
+                // Back to original state (unsorted)
+                productArrayList = ArrayList(originalList)
+            }
+        }
+        adapter.updateList(productArrayList)
+    }
+
 
 
 
@@ -103,18 +137,45 @@ class HomeFragment : Fragment() {
                 }
 
                 //
-                productRecyclerView.adapter = MyAdapter2(productArrayList)
+                originalList = ArrayList(productArrayList)
+                adapter = MyAdapter2(productArrayList)
+                productRecyclerView.adapter = adapter
+                setUpSearchView()
             }
 
             override fun onCancelled(error: DatabaseError) {
                 //
             }
         })
+
+
     }
+    private fun setUpSearchView() {
+        searchView = binding.search
+        //
 
 
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
 
+            override fun onQueryTextChange(newText: String?): Boolean {
+                if (newText.isNullOrBlank()) {
+                    // If the search query is empty, display the original list
+                    adapter.updateList(originalList)
+                } else {
+                    // Filter the list based on the search query
+                    val filteredList = originalList.filter { product ->
+                        product.dataItemName?.contains(newText, ignoreCase = true) == true
+                    } as ArrayList<ProductsData>
+                    adapter.updateList(filteredList)
+                }
+                return true
+            }
 
+        })
+    }
 
 
 

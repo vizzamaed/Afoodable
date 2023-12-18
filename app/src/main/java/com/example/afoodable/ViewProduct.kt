@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 class ViewProduct : AppCompatActivity() {
     var imageURL = ""
     var productID: String = ""
+    var sellerID:String=""
 
 
     private lateinit var binding: ActivityViewProductBinding
@@ -42,6 +43,8 @@ class ViewProduct : AppCompatActivity() {
         }
 
         productID = intent.getStringExtra("ProductID") ?: ""
+        sellerID=intent.getStringExtra("sellerID")?:""
+
         val auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
 
@@ -55,6 +58,8 @@ class ViewProduct : AppCompatActivity() {
             val businessLocation = binding.detailItemBusinessLocation.text.toString()
             val productID = /* Retrieve the product ID, passed from previous activity */
 
+
+
                 currentUser?.let { user ->
                     val userId = user.uid
                     val databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userId).child("Cart")
@@ -66,6 +71,7 @@ class ViewProduct : AppCompatActivity() {
                     orderDetails["businessName"] = businessName
                     orderDetails["businessLocation"] = businessLocation
                     orderDetails["productID"] = productID// Add product ID to the order details
+                    orderDetails["sellerID"] = sellerID
 
                     // Set the order details under the item name as the key
                     databaseReference.child(productID).setValue(orderDetails)

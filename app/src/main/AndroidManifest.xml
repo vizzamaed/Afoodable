@@ -16,6 +16,15 @@
         android:theme="@style/Theme.Afoodable"
         tools:targetApi="31">
         <activity
+            android:name=".ViewSellerPickUp"
+            android:exported="false" />
+        <activity
+            android:name=".ViewSellerPrepare"
+            android:exported="false" />
+        <activity
+            android:name=".ViewConfirmation"
+            android:exported="false" />
+        <activity
             android:name=".ViewSellerOrder"
             android:exported="false" />
         <activity

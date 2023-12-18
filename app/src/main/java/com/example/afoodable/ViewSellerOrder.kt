@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth
 class ViewSellerOrder : AppCompatActivity() {
     var imageURL = ""
     var productID: String = ""
+    var orderID: String = ""
 
 
     private lateinit var binding: ActivityViewSellerOrderBinding
@@ -37,16 +38,17 @@ class ViewSellerOrder : AppCompatActivity() {
             binding.detailItemBusinessName.text = bundle.getString("businessName")
 
             imageURL = bundle.getString("Image")!!
-            //
+
             Glide.with(this).load(bundle.getString("Image")).into(binding.detailImage)
 
         }
 
         productID = intent.getStringExtra("ProductID") ?: ""
+        orderID=intent.getStringExtra("orderID")?:""
         val auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
 
-        // Inside addToCartBtn click listener in ViewProduct class
+
         binding.accept.setOnClickListener {
             val itemName = binding.detailItemName.text.toString()
             val itemPrice = binding.detailItemPrice.text.toString()
@@ -54,11 +56,11 @@ class ViewSellerOrder : AppCompatActivity() {
             val imageURL = imageURL // Assuming imageURL is a global variable
             val businessName = binding.detailItemBusinessName.text.toString()
             val businessLocation = binding.detailItemBusinessLocation.text.toString()
-            val productID = /* Retrieve the product ID, passed from previous activity */
+
 
                 currentUser?.let { user ->
                     val userId = user.uid
-                    val databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userId).child("Cart")
+                    val databaseReference = FirebaseDatabase.getInstance().getReference("Preparing Orders").child(userId)
                     val orderDetails = HashMap<String, Any>()
                     orderDetails["ItemName"] = itemName
                     orderDetails["Price"] = itemPrice
@@ -66,16 +68,19 @@ class ViewSellerOrder : AppCompatActivity() {
                     orderDetails["Image"] = imageURL
                     orderDetails["businessName"] = businessName
                     orderDetails["businessLocation"] = businessLocation
-                    orderDetails["productID"] = productID// Add product ID to the order details
+                    orderDetails["productID"] = productID
+                    orderDetails["orderID"] = orderID
 
-                    // Set the order details under the item name as the key
-                    databaseReference.child(productID).setValue(orderDetails)
+
+                    databaseReference.child(orderID).setValue(orderDetails)
                         .addOnSuccessListener {
-                            Toast.makeText(this@ViewSellerOrder, "Item Added to Cart", Toast.LENGTH_SHORT).show()
-                            finish()
-                        }
+                        Toast.makeText(this@ViewSellerOrder, "Preparing Item", Toast.LENGTH_SHORT).show()
+                        val orderReference = FirebaseDatabase.getInstance().getReference("Orders").child(userId)
+                        orderReference.child(orderID).removeValue()
+                        finish()
+                    }
                         .addOnFailureListener {
-                            Toast.makeText(this@ViewSellerOrder, "Failed to add item to cart", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@ViewSellerOrder, "Failed to Place Item", Toast.LENGTH_SHORT).show()
                         }
                 }
         }

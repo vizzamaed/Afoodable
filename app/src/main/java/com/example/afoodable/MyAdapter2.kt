@@ -13,7 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
 
-class MyAdapter2 (private val productList: ArrayList<ProductsData>): RecyclerView.Adapter<MyAdapter2.MyViewHolder>(){
+class MyAdapter2 (private var productList: ArrayList<ProductsData>): RecyclerView.Adapter<MyAdapter2.MyViewHolder>(){
+//
 
 
 
@@ -44,6 +45,7 @@ class MyAdapter2 (private val productList: ArrayList<ProductsData>): RecyclerVie
             intent.putExtra("businessName", productList[holder.adapterPosition].businessName)
             intent.putExtra("businessLocation", productList[holder.adapterPosition].businessLocation)
             intent.putExtra("ProductID", productList[holder.adapterPosition].productID)
+            intent.putExtra("sellerID", productList[holder.adapterPosition].sellerID)
 
 
             // Include Product ID here
@@ -53,11 +55,13 @@ class MyAdapter2 (private val productList: ArrayList<ProductsData>): RecyclerVie
 
     }
 
-    fun searchProductList(searchList: List<ProductsData>) {
-        productList.clear()
-        productList.addAll(searchList)
+    fun updateList(newList: ArrayList<ProductsData>) {
+        productList = newList
         notifyDataSetChanged()
     }
+
+
+
 
     class MyViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
         val productImage:ImageView=itemView.findViewById(R.id.recImageProduct)

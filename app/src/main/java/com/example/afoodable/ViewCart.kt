@@ -18,6 +18,8 @@ import com.google.firebase.database.ValueEventListener
 class ViewCart : AppCompatActivity() {
     var imageURL = ""
     var productID: String = ""
+    var sellerID: String = ""
+
 
 
     private lateinit var binding: ActivityViewCartBinding
@@ -70,6 +72,7 @@ class ViewCart : AppCompatActivity() {
 
 
         productID = intent.getStringExtra("ProductID") ?: ""
+        sellerID=intent.getStringExtra("sellerID")?:""
         val auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
 
@@ -86,7 +89,10 @@ class ViewCart : AppCompatActivity() {
                 currentUser?.let { user ->
                     val userId = user.uid
                     val databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userId).child("Orders")
+                    val orderID = databaseReference.push().key ?: ""
+
                     val orderDetails = HashMap<String, Any>()
+                    orderDetails["orderID"] = orderID
                     orderDetails["productID"] = productID//
                     orderDetails["ItemName"] = itemName
                     orderDetails["Description"] = itemDescription
@@ -94,6 +100,7 @@ class ViewCart : AppCompatActivity() {
                     orderDetails["Image"] = imageURL
                     orderDetails["businessLocation"] = businessLocation
                     orderDetails["businessName"] = businessName
+                    orderDetails["sellerID"] = sellerID
 
                     val itemPriceStr = binding.detailItemPrice.text.toString()
                     val itemPrice = itemPriceStr.toFloatOrNull() ?: 0.0f
@@ -104,10 +111,12 @@ class ViewCart : AppCompatActivity() {
                     orderDetails["totalPrice"] = totalPrice
 
 
-                    databaseReference.child(productID).setValue(orderDetails)
+                    databaseReference.child(orderID).setValue(orderDetails)
                         .addOnSuccessListener {
-                            saveToProducts(userId, productID, orderDetails)
+                            saveToProducts(userId,user.uid, productID, orderDetails,sellerID)
                             Toast.makeText(this@ViewCart, "Item Placed", Toast.LENGTH_SHORT).show()
+                            val cartReference = FirebaseDatabase.getInstance().getReference("Users").child(userId).child("Cart")
+                            cartReference.child(productID).removeValue()
                             finish()
                         }
                         .addOnFailureListener {
@@ -134,42 +143,27 @@ class ViewCart : AppCompatActivity() {
         }
     }
 
-    fun saveToProducts(userId: String, productID: String, orderDetails: HashMap<String, Any>) {
-        val productsRef = FirebaseDatabase.getInstance().getReference("Products")
+    fun saveToProducts(
+        userId: String,
+        currentUserID: String,
+        productID: String,
+        orderDetails: HashMap<String, Any>,
+        sellerID: String
+    ) {
+        val ordersRef = FirebaseDatabase.getInstance().getReference("Orders").child(sellerID)
 
-        productsRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (userSnapshot in snapshot.children) {
-                    val userKey = userSnapshot.key.toString()
-                    if (userKey != userId) {
-                        val userProductsRef = productsRef.child(userKey)
-                        userProductsRef.addListenerForSingleValueEvent(object :
-                            ValueEventListener {
-                            override fun onDataChange(userProductsSnapshot: DataSnapshot) {
-                                if (userProductsSnapshot.hasChild(productID)) {
-                                    userProductsRef.child(productID).child("Orders")
-                                        .setValue(orderDetails)
-                                        .addOnCompleteListener { task ->
-                                            if (task.isSuccessful) {
-
-                                            } else {
-
-                                            }
-                                        }
-                                }
-                            }
-
-                            override fun onCancelled(error: DatabaseError) {
-                                // Handle error
-                            }
-                        })
-                    }
+        ordersRef.child(orderDetails["orderID"] as String)
+            .setValue(orderDetails)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // Handle success
+                } else {
+                    // Handle failure
                 }
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                // Handle error
-            }
-        })
     }
+
+
+
+
 }

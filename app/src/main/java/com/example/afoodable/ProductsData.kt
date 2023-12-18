@@ -7,5 +7,8 @@ data class ProductsData (
     var dataItemPrice: String?=null,
     var dataImage: String?=null,
     var businessName:String?= null,
-    var businessLocation:String?= null
+    var businessLocation:String?= null,
+    var sellerID: String? = null,
+    //
+    var orderID: String? = null
 )

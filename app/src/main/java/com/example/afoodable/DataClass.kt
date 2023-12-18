@@ -8,6 +8,7 @@ class DataClass {
     var dataImage: String?=null
     var businessName: String? = null
     var businessLocation: String? = null
+    var sellerID: String? = null
 
 
 

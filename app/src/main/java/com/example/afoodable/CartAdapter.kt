@@ -52,7 +52,11 @@ class CartAdapter (private val productList: ArrayList<ProductsData>): RecyclerVi
             intent.putExtra("Price", productList[holder.adapterPosition].dataItemPrice)
             intent.putExtra("businessName", productList[holder.adapterPosition].businessName)
             intent.putExtra("businessLocation", productList[holder.adapterPosition].businessLocation)
+            intent.putExtra("sellerID", productList[holder.adapterPosition].sellerID)
             holder.itemView.context.startActivity(intent)
+            Log.d("CartAdapter", "ProductID: ${productList[holder.adapterPosition].productID}")
+            Log.d("CartAdapter", "SellerID: ${productList[holder.adapterPosition].sellerID}")
+
         }
 
 

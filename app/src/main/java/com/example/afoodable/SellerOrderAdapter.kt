@@ -44,6 +44,7 @@ class SellerOrderAdapter (private val productList: ArrayList<ProductsData>): Rec
             intent.putExtra("businessName", productList[holder.adapterPosition].businessName)
             intent.putExtra("businessLocation", productList[holder.adapterPosition].businessLocation)
             intent.putExtra("ProductID", productList[holder.adapterPosition].productID)
+            intent.putExtra("orderID", productList[holder.adapterPosition].orderID)
 
 
             // Include Product ID here

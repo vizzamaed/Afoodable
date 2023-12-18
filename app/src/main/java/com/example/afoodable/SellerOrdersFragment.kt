@@ -55,37 +55,41 @@ class SellerOrdersFragment : Fragment() {
     }
 
     private fun getProductData() {
-        val dbref = FirebaseDatabase.getInstance().getReference("Products")
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val userId = currentUser?.uid ?: ""
 
-        dbref.addListenerForSingleValueEvent(object : ValueEventListener {
+        val dbref = FirebaseDatabase.getInstance().getReference("Orders")
+            .child(userId)
+
+
+        dbref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val productArrayList = ArrayList<ProductsData>()
 
-                for (userSnapshot in snapshot.children) {
-                    val userId = userSnapshot.key // Get the seller's ID
+                for (orderSnapshot in snapshot.children) {
+                    val itemDescription = orderSnapshot.child("Description").getValue(String::class.java)
+                    val itemImage = orderSnapshot.child("Image").getValue(String::class.java)
+                    val itemName = orderSnapshot.child("ItemName").getValue(String::class.java)
+                    val itemPrice = orderSnapshot.child("Price").getValue(String::class.java)
+                    val businessLocation = orderSnapshot.child("businessLocation").getValue(String::class.java)
+                    val businessName = orderSnapshot.child("businessName").getValue(String::class.java)
+                    val productID = orderSnapshot.key //
+                    val sellerID = orderSnapshot.child("sellerID").getValue(String::class.java) ?: ""
+                    //
+                    val orderID = orderSnapshot.child("orderID").getValue(String::class.java) ?: ""
+                    val productsData = ProductsData(productID, itemName, itemDescription, itemPrice, itemImage, businessName, businessLocation, sellerID,orderID)
+                    productArrayList.add(productsData)
 
-                    userId?.let { sellerId ->
-                        for (productSnapshot in userSnapshot.children) {
-                            val productData = productSnapshot.getValue(ProductsData::class.java)
-                            productData?.let {
-                                productArrayList.add(it)
-                            }
-                        }
-                    }
                 }
 
-                //
                 productRecyclerView.adapter = SellerOrderAdapter(productArrayList)
             }
 
             override fun onCancelled(error: DatabaseError) {
-                //
+
             }
         })
     }
-
-
-
 
 
 

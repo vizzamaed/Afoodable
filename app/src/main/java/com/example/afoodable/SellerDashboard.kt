@@ -30,10 +30,7 @@ class SellerDashboard : AppCompatActivity() {
                     replaceFragment(SellerNotificationsFragment())
                     true
                 }
-                R.id.seller_bottom_Cart -> {
-                    replaceFragment(SellerOrdersFragment())
-                    true
-                }
+
                 R.id.seller_bottom_account-> {
                     replaceFragment(SellerAccountFragment())
                     true

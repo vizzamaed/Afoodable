@@ -100,9 +100,8 @@ class CartFragment : Fragment() {
                     val businessLocation = orderSnapshot.child("businessLocation").getValue(String::class.java)
                     val businessName = orderSnapshot.child("businessName").getValue(String::class.java)
                     val productID = orderSnapshot.key //
-
-
-                    val productsData = ProductsData(productID ?: "",itemName, itemDescription, itemPrice, itemImage, businessName, businessLocation)
+                    val sellerID = orderSnapshot.child("sellerID").getValue(String::class.java) ?: ""
+                    val productsData = ProductsData(productID, itemName, itemDescription, itemPrice, itemImage, businessName, businessLocation, sellerID)
                     productArrayList.add(productsData)
 
                 }

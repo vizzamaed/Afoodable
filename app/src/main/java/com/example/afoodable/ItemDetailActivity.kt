@@ -43,11 +43,21 @@ class ItemDetailActivity : AppCompatActivity() {
             Glide.with(this).load(bundle.getString("Image")).into(binding.detailImage)
 
         }
-        binding.updateItemBtn.setOnClickListener{
-            val intent= Intent(this@ItemDetailActivity, UpdateSellerProducts::class.java)
+        binding.updateItemBtn.setOnClickListener {
+            val itemName = intent.getStringExtra("Item Name")
+            val itemPrice = intent.getStringExtra("Price")
+            val itemDescription = intent.getStringExtra("Description")
+
+            val intent = Intent(this@ItemDetailActivity, UpdateSellerProducts::class.java)
+            intent.putExtra("itemName", itemName)
+            intent.putExtra("itemPrice", itemPrice)
+            intent.putExtra("itemDescription", itemDescription)
             startActivity(intent)
             finish()
         }
+
+
+
         binding.deleteItemBtn.setOnClickListener {
             val builder = AlertDialog.Builder(this)
             val view = layoutInflater.inflate(R.layout.dialog_delete_item, null)
