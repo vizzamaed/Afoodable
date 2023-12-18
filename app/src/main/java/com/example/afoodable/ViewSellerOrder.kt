@@ -58,8 +58,8 @@ class ViewSellerOrder : AppCompatActivity() {
             val businessLocation = binding.detailItemBusinessLocation.text.toString()
 
 
-                currentUser?.let { user ->
-                    val userId = user.uid
+            currentUser?.let { user ->
+                val userId = user.uid
                     val databaseReference = FirebaseDatabase.getInstance().getReference("Preparing Orders").child(userId)
                     val orderDetails = HashMap<String, Any>()
                     orderDetails["ItemName"] = itemName
