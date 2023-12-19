@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.afoodable.databinding.FragmentHomeBinding
 import com.example.afoodable.databinding.FragmentPreparingOrderBinding
-import com.example.afoodable.databinding.FragmentSellerCancelledBinding
 import com.example.afoodable.databinding.FragmentSellerCompletedBinding
 import com.example.afoodable.databinding.FragmentSellerFailedBinding
 import com.example.afoodable.databinding.FragmentSellerOrdersBinding
@@ -24,9 +23,9 @@ import com.example.afoodable.databinding.FragmentSellerPreparingBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 
-class SellerCancelledFragment : Fragment() {
+class SellerFailedFragment : Fragment() {
 
-    private lateinit var binding: FragmentSellerCancelledBinding
+    private lateinit var binding: FragmentSellerFailedBinding
     private lateinit var databaseReference: DatabaseReference
 
     private lateinit var dbref: DatabaseReference
@@ -37,7 +36,7 @@ class SellerCancelledFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSellerCancelledBinding.inflate(inflater, container, false)
+        binding = FragmentSellerFailedBinding.inflate(inflater, container, false)
         return binding.root
 
 
@@ -64,7 +63,7 @@ class SellerCancelledFragment : Fragment() {
         val currentUser = FirebaseAuth.getInstance().currentUser
         val userId = currentUser?.uid ?: ""
 
-        val dbref = FirebaseDatabase.getInstance().getReference("Cancelled Orders")
+        val dbref = FirebaseDatabase.getInstance().getReference("Failed Orders")
             .child(userId)
 
 
@@ -88,7 +87,7 @@ class SellerCancelledFragment : Fragment() {
 
                 }
 
-                productRecyclerView.adapter = SellerCancelledAdapter(productArrayList)
+                productRecyclerView.adapter = SellerFailedAdapter(productArrayList)
             }
 
             override fun onCancelled(error: DatabaseError) {

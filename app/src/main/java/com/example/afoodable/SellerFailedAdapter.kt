@@ -13,12 +13,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
 
-class SellerCompletedAdapter (private val productList: ArrayList<ProductsData>): RecyclerView.Adapter<SellerCompletedAdapter.MyViewHolder>(){
+class SellerFailedAdapter (private val productList: ArrayList<ProductsData>): RecyclerView.Adapter<SellerFailedAdapter.MyViewHolder>(){
 
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val itemView=LayoutInflater.from(parent.context).inflate(R.layout.seller_completed_item,parent,false)
+        val itemView=LayoutInflater.from(parent.context).inflate(R.layout.seller_failed_item,parent,false)
         return MyViewHolder(itemView)
     }
 
@@ -36,7 +36,7 @@ class SellerCompletedAdapter (private val productList: ArrayList<ProductsData>):
         holder.businessLocation.text = currentItem.businessLocation
 
         holder.recCardProduct.setOnClickListener {
-            val intent = Intent(holder.itemView.context, ViewSellerCompleted::class.java)
+            val intent = Intent(holder.itemView.context, ViewSellerFailed::class.java)
             intent.putExtra("Image", productList[holder.adapterPosition].dataImage)
             intent.putExtra("Item Name", productList[holder.adapterPosition].dataItemName)
             intent.putExtra("Description", productList[holder.adapterPosition].dataItemDescription)

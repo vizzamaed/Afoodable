@@ -89,7 +89,39 @@ class ViewSellerOrder : AppCompatActivity() {
 
 
         binding.reject.setOnClickListener {
-            finish()
+            val itemName = binding.detailItemName.text.toString()
+            val itemPrice = binding.detailItemPrice.text.toString()
+            val itemDescription = binding.detailItemDescription.text.toString()
+            val imageURL = imageURL // Assuming imageURL is a global variable
+            val businessName = binding.detailItemBusinessName.text.toString()
+            val businessLocation = binding.detailItemBusinessLocation.text.toString()
+
+
+            currentUser?.let { user ->
+                val userId = user.uid
+                val databaseReference = FirebaseDatabase.getInstance().getReference("Cancelled Orders").child(userId)
+                val orderDetails = HashMap<String, Any>()
+                orderDetails["ItemName"] = itemName
+                orderDetails["Price"] = itemPrice
+                orderDetails["Description"] = itemDescription
+                orderDetails["Image"] = imageURL
+                orderDetails["businessName"] = businessName
+                orderDetails["businessLocation"] = businessLocation
+                orderDetails["productID"] = productID
+                orderDetails["orderID"] = orderID
+
+
+                databaseReference.child(orderID).setValue(orderDetails)
+                    .addOnSuccessListener {
+                        Toast.makeText(this@ViewSellerOrder, "Successfully Cancelled Item", Toast.LENGTH_SHORT).show()
+                        val orderReference = FirebaseDatabase.getInstance().getReference("Orders").child(userId)
+                        orderReference.child(orderID).removeValue()
+                        finish()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(this@ViewSellerOrder, "Failed to Cancel Item", Toast.LENGTH_SHORT).show()
+                    }
+            }
         }
     }
 }
