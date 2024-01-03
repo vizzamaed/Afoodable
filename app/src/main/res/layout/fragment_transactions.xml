@@ -33,14 +33,14 @@
         android:layout_marginTop="20dp">
 
         <TextView
+            android:id="@+id/detailItemName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/detailItemName"
-            android:text="Transactions"
             android:layout_gravity="center"
-            android:textSize="24sp"
             android:layout_marginBottom="12dp"
-            android:textColor="@color/Sapphire"/>
+            android:text="My Purchases"
+            android:textColor="@color/Sapphire"
+            android:textSize="24sp" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"

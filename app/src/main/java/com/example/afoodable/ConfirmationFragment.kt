@@ -53,43 +53,65 @@ class ConfirmationFragment : Fragment() {
 
         productArrayList = arrayListOf()
 
-        val currentUser = FirebaseAuth.getInstance().currentUser
-        val userId = currentUser?.uid ?: ""
+        //
 
-        val dbref = FirebaseDatabase.getInstance().getReference("Users")
-            .child(userId)
-            .child("Orders")
+        getProductData()
+
+        //
+    }
+
+    private fun getProductData() {
+        val currentUserID = FirebaseAuth.getInstance().currentUser?.uid
+
+        val dbref = FirebaseDatabase.getInstance().getReference("Orders")
 
         dbref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val productArrayList = ArrayList<ProductsData>()
 
-                for (orderSnapshot in snapshot.children) {
-                    val itemDescription = orderSnapshot.child("Description").getValue(String::class.java)
-                    val itemImage = orderSnapshot.child("Image").getValue(String::class.java)
-                    val itemName = orderSnapshot.child("ItemName").getValue(String::class.java)
-                    val itemPrice = orderSnapshot.child("Price").getValue(String::class.java)
-                    val businessLocation = orderSnapshot.child("businessLocation").getValue(String::class.java)
-                    val businessName = orderSnapshot.child("businessName").getValue(String::class.java)
-                    val productID = orderSnapshot.key //
-                    val sellerID=orderSnapshot.key
+                for (sellerSnapshot in snapshot.children) {
+                    for (orderSnapshot in sellerSnapshot.children) {
+                        val sellerID = sellerSnapshot.key
+                        val userID = orderSnapshot.child("userID").getValue(String::class.java)
 
+                        if (userID == currentUserID) {
+                            val itemDescription = orderSnapshot.child("Description").getValue(String::class.java)
+                            val itemImage = orderSnapshot.child("Image").getValue(String::class.java)
+                            val itemName = orderSnapshot.child("ItemName").getValue(String::class.java)
+                            val itemPrice = orderSnapshot.child("Price").getValue(String::class.java)
+                            val businessLocation = orderSnapshot.child("businessLocation").getValue(String::class.java)
+                            val businessName = orderSnapshot.child("businessName").getValue(String::class.java)
+                            val productID = orderSnapshot.key
+                            val sellerID = sellerID ?: ""
+                            val orderID = orderSnapshot.child("orderID").getValue(String::class.java) ?: ""
 
-                    val productsData = ProductsData(productID ?: "",itemName, itemDescription, itemPrice, itemImage, businessName, businessLocation,sellerID ?: "")
-                    productArrayList.add(productsData)
-
+                            val productsData = ProductsData(
+                                productID,
+                                itemName,
+                                itemDescription,
+                                itemPrice,
+                                itemImage,
+                                businessName,
+                                businessLocation,
+                                sellerID,
+                                orderID,
+                                userID ?: ""
+                            )
+                            productArrayList.add(productsData)
+                        }
+                    }
                 }
 
-                productRecyclerView.adapter = ConfirmationFragmentAdapter(productArrayList)
+                productRecyclerView.adapter =ConfirmationFragmentAdapter(productArrayList)
             }
 
             override fun onCancelled(error: DatabaseError) {
-
+                // Handle error
             }
         })
-
-
     }
+
+
 
 
 }

@@ -96,13 +96,13 @@ class HomeFragment : Fragment() {
     /////
     private fun sortProductList() {
         when (sortCount % 3) {
-            1 -> {
+            0 -> {
                 // Sort from lowest to highest
-                productArrayList.sortBy { it.dataItemPrice?.toFloatOrNull() ?: Float.MAX_VALUE }
+                productArrayList = ArrayList(originalList.sortedBy { it.dataItemPrice?.toFloatOrNull() ?: Float.MAX_VALUE })
             }
-            2 -> {
+            1 -> {
                 // Sort from highest to lowest
-                productArrayList.sortByDescending { it.dataItemPrice?.toFloatOrNull() ?: Float.MIN_VALUE }
+                productArrayList = ArrayList(originalList.sortedByDescending { it.dataItemPrice?.toFloatOrNull() ?: Float.MIN_VALUE })
             }
             else -> {
                 // Back to original state (unsorted)

@@ -29,6 +29,8 @@ class SellerAccountFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        fetchAndDisplayUserData()
+
 
         val buyerDashboardBtn = view.findViewById<Button>(R.id.buyerDashboardBtn)
 
@@ -48,21 +50,25 @@ class SellerAccountFragment : Fragment() {
 
     }
 
-    private fun fetchAndDisplayUserData(){
+    private fun fetchAndDisplayUserData() {
         val currentUser = FirebaseAuth.getInstance().currentUser
         val userId = currentUser?.uid
 
         if (userId != null) {
-            val databaseReference = FirebaseDatabase.getInstance().reference.child("Users").child(userId).child("zsellerData")
+            val databaseReference = FirebaseDatabase.getInstance().reference
+                .child("Users")
+                .child(userId)
+                .child("zsellerData")
+                .child("businessData")
 
             databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
-                        val SellerData = snapshot.getValue(SellerData::class.java)
+                        val sellerData = snapshot.getValue(SellerData::class.java)
 
-                        view?.findViewById<TextView>(R.id.accountBusinessName)?.text = SellerData?.businessName ?: ""
-                        view?.findViewById<TextView>(R.id.accountBusinessLocation)?.text = SellerData?.businessLocation ?: ""
-
+                        // Display seller data in TextViews
+                        view?.findViewById<TextView>(R.id.accountBusinessName)?.text = sellerData?.businessName ?: ""
+                        view?.findViewById<TextView>(R.id.accountBusinessLocation)?.text = sellerData?.businessLocation ?: ""
                     } else {
                         Log.d("SellerAccountFragment", "Snapshot does not exist for user ID: $userId")
                     }
@@ -75,7 +81,7 @@ class SellerAccountFragment : Fragment() {
         } else {
             Log.e("SellerAccountFragment", "User not authenticated")
         }
-
     }
 
-    }
+
+}

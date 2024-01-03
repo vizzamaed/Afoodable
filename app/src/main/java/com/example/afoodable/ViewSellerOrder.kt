@@ -17,6 +17,8 @@ class ViewSellerOrder : AppCompatActivity() {
     var imageURL = ""
     var productID: String = ""
     var orderID: String = ""
+    //
+    var userID: String=""
 
 
     private lateinit var binding: ActivityViewSellerOrderBinding
@@ -45,6 +47,8 @@ class ViewSellerOrder : AppCompatActivity() {
 
         productID = intent.getStringExtra("ProductID") ?: ""
         orderID=intent.getStringExtra("orderID")?:""
+        //
+        userID=intent.getStringExtra("userID")?:""
         val auth = FirebaseAuth.getInstance()
         val currentUser = auth.currentUser
 
@@ -70,6 +74,8 @@ class ViewSellerOrder : AppCompatActivity() {
                     orderDetails["businessLocation"] = businessLocation
                     orderDetails["productID"] = productID
                     orderDetails["orderID"] = orderID
+                    //
+                    orderDetails["userID"] = userID
 
 
                     databaseReference.child(orderID).setValue(orderDetails)
@@ -109,6 +115,8 @@ class ViewSellerOrder : AppCompatActivity() {
                 orderDetails["businessLocation"] = businessLocation
                 orderDetails["productID"] = productID
                 orderDetails["orderID"] = orderID
+                //
+                orderDetails["userID"] = userID
 
 
                 databaseReference.child(orderID).setValue(orderDetails)

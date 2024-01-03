@@ -85,15 +85,6 @@
                     android:layout_height="70dp"
                     android:layout_marginTop="5dp"
                     android:text="Seller Mode"
-                    android:id="@+id/sellerDashboard"
-                    android:textSize="18sp"
-                    app:cornerRadius="30dp"
-                    android:layout_gravity="center"/>
-                <Button
-                    android:layout_width="300dp"
-                    android:layout_height="70dp"
-                    android:layout_marginTop="5dp"
-                    android:text="Register Business"
                     android:id="@+id/beSellerBtn"
                     android:textSize="18sp"
                     app:cornerRadius="30dp"

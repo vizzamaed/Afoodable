@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scrollbars="vertical"
-        tools:listitem="@layout/seller_order_item"
+        tools:listitem="@layout/completed_item"
         android:layout_below="@id/title"
         android:layout_centerInParent="true"/>
 

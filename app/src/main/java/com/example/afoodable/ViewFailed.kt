@@ -4,6 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.example.afoodable.databinding.ActivityViewCompletedBinding
+import com.example.afoodable.databinding.ActivityViewFailedBinding
+import com.example.afoodable.databinding.ActivityViewPickupBinding
+import com.example.afoodable.databinding.ActivityViewPrepareOrderBinding
 import com.example.afoodable.databinding.ActivityViewSellerCompletedBinding
 import com.example.afoodable.databinding.ActivityViewSellerPickUpBinding
 import com.example.afoodable.databinding.ActivityViewSellerPrepareBinding
@@ -11,7 +15,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.auth.FirebaseAuth
 
-class ViewSellerCompleted : AppCompatActivity() {
+class ViewFailed : AppCompatActivity() {
     var imageURL = ""
     var productID: String = ""
     var orderID: String = ""
@@ -19,13 +23,13 @@ class ViewSellerCompleted : AppCompatActivity() {
     var userID: String = ""
 
 
-    private lateinit var binding: ActivityViewSellerCompletedBinding
+    private lateinit var binding: ActivityViewFailedBinding
     private lateinit var databaseReference: DatabaseReference
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityViewSellerCompletedBinding.inflate(layoutInflater)
+        binding = ActivityViewFailedBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 

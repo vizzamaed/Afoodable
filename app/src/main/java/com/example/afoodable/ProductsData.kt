@@ -9,6 +9,7 @@ data class ProductsData (
     var businessName:String?= null,
     var businessLocation:String?= null,
     var sellerID: String? = null,
+    var orderID: String? = null,
     //
-    var orderID: String? = null
+    var userID: String?=null
 )

@@ -152,6 +152,10 @@ class ViewCart : AppCompatActivity() {
     ) {
         val ordersRef = FirebaseDatabase.getInstance().getReference("Orders").child(sellerID)
 
+        //
+
+        orderDetails["userID"] = currentUserID
+
         ordersRef.child(orderDetails["orderID"] as String)
             .setValue(orderDetails)
             .addOnCompleteListener { task ->

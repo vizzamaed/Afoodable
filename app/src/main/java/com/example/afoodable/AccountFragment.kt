@@ -32,7 +32,7 @@ class AccountFragment : Fragment() {
 
         fetchAndDisplayUserData()
 
-        val sellerDashboard= view.findViewById<Button>(R.id.sellerDashboard)
+
         val edit_Profile_button= view.findViewById<Button>(R.id.edit_Profile_button)
         val beSellerBtn= view.findViewById<Button>(R.id.beSellerBtn)
 
@@ -41,10 +41,6 @@ class AccountFragment : Fragment() {
             startActivity(Intent(context, ProfileSettings::class.java))
         }
 
-
-        sellerDashboard.setOnClickListener {
-            startActivity(Intent(context, SellerDashboard::class.java))
-        }
 
         val logoutButton = view.findViewById<Button>(R.id.logoutBtn)
 
@@ -60,26 +56,51 @@ class AccountFragment : Fragment() {
 
 
         beSellerBtn.setOnClickListener {
-            val builder = AlertDialog.Builder(requireContext())
-            val view=layoutInflater.inflate(R.layout.sellermode_alert,null)
+            val currentUser = FirebaseAuth.getInstance().currentUser
+            val userId = currentUser?.uid
 
-            builder.setView(view)
-            val dialog=builder.create()
+            if (userId != null) {
+                val databaseReference = FirebaseDatabase.getInstance().reference
+                    .child("Users")
+                    .child(userId)
+                    .child("zsellerData")
+                    .child("businessData")
 
-            view.findViewById<Button>(R.id.beSellerCancelBtn).setOnClickListener {
-                dialog.dismiss()
+                databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (snapshot.exists()) {
+                            // businessData exists, navigate to seller dashboard
+                            startActivity(Intent(requireContext(), SellerDashboard::class.java))
+                        } else {
+                            // businessData doesn't exist, show the sellermode_alert
+                            val dialogView = layoutInflater.inflate(R.layout.sellermode_alert, null)
+                            val builder = AlertDialog.Builder(requireContext())
+                                .setView(dialogView)
+
+                            val dialog = builder.create()
+                            dialog.show()
+
+                            // Handle the buttons inside the dialog
+                            dialogView.findViewById<Button>(R.id.beSellerCancelBtn)?.setOnClickListener {
+                                dialog.dismiss()
+                            }
+
+                            dialogView.findViewById<Button>(R.id.BeSellerRegisterBtn)?.setOnClickListener {
+                                startActivity(Intent(requireContext(), SellerRegistration::class.java))
+                                dialog.dismiss()
+                            }
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        Log.e("AccountFragment", "Database error: ${error.message}")
+                    }
+                })
+            } else {
+                Log.e("AccountFragment", "User not authenticated")
             }
-            view.findViewById<Button>(R.id.BeSellerRegisterBtn).setOnClickListener {
-                startActivity(Intent(requireContext(),SellerRegistration::class.java))
-                dialog.dismiss()
-            }
-
-            if (dialog.window != null){
-                dialog.window!!.setBackgroundDrawable(ColorDrawable(0))
-            }
-            dialog.show()
-
         }
+
 
 
     }

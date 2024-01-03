@@ -12,7 +12,7 @@ class TransactionsFragmentAdapter(
 
     override fun getItemCount(): Int {
         // Return the total number of fragments
-        return 5
+        return 6
     }
 
     override fun createFragment(position: Int): Fragment {
@@ -21,7 +21,8 @@ class TransactionsFragmentAdapter(
             1 -> PreparingOrderFragment()
             2 -> PickUpDeliveryFragment()
             3 -> CompletedFragment()
-            4 -> CancelledFragment()
+            4 -> FailedFragment()
+            5 -> CancelledFragment()
             else -> throw IllegalArgumentException("Invalid position: $position")
         }
     }

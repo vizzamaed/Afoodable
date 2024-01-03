@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PreparingOrderFragment">
+    tools:context=".CompletedFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -11,7 +11,7 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Preparing Orders"
+        android:text="Failed Orders"
         android:layout_margin="10dp"
         android:layout_centerHorizontal="true"/>
 
@@ -20,7 +20,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scrollbars="vertical"
-        tools:listitem="@layout/prepare_order_item"
+        tools:listitem="@layout/failed_item"
         android:layout_below="@id/title"
         android:layout_centerInParent="true"/>
 

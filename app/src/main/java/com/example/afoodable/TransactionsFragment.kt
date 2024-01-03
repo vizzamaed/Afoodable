@@ -30,6 +30,7 @@ class TransactionsFragment : Fragment() {
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.approved_7818011))
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.truck_6417794))
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.stickynote_6042989))
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.baseline_warning_24))
         tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.page_5451441))
 
         viewPager2.adapter = adapter

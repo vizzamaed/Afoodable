@@ -37,6 +37,21 @@
             android:name=".ViewProduct"
             android:exported="false" />
         <activity
+            android:name=".ViewPrepareOrder"
+            android:exported="false" />
+        <activity
+            android:name=".ViewPickUp"
+            android:exported="false" />
+        <activity
+            android:name=".ViewFailed"
+            android:exported="false" />
+        <activity
+            android:name=".ViewCompleted"
+            android:exported="false" />
+        <activity
+            android:name=".ViewCancelled"
+            android:exported="false" />
+        <activity
             android:name=".UpdateSellerProducts"
             android:exported="false" />
         <activity
