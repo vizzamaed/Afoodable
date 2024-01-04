@@ -23,15 +23,22 @@
         app:closeIcon="@drawable/baseline_clear_24"
         app:searchIcon="@drawable/baseline_search_24"/>
 
-        <ScrollView
-            android:layout_width="350dp"
-            android:layout_height="700dp"
-            android:layout_marginLeft="24dp"
+    <ScrollView
+        android:layout_width="350dp"
+        android:layout_height="700dp"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:background="@drawable/skyblue_border"
+        android:backgroundTint="#80FFFFFF"
+        android:layout_below="@id/search">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="10dp"
-            android:background="@drawable/skyblue_border"
-            android:layout_below="@id/search"
-            android:backgroundTint="#80FFFFFF">
+            android:layout_gravity="center_horizontal">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="wrap_content"
@@ -41,8 +48,9 @@
                 tools:listitem="@layout/recycler_item"
                 android:gravity="start|center_vertical" />
 
+        </LinearLayout>
 
-        </ScrollView>
+    </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addItemBtn"

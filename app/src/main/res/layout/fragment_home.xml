@@ -8,7 +8,6 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-
     <LinearLayout
         android:id="@+id/head"
         android:layout_width="410dp"
@@ -33,7 +32,6 @@
             app:searchHintIcon="@null"
             app:searchIcon="@drawable/baseline_search_24" />
 
-
         <Button
             android:id="@+id/sortUpBtn"
             android:layout_width="60dp"
@@ -49,7 +47,7 @@
         android:layout_height="150dp"
         android:id="@+id/recyclerViewPromo"
         android:layout_below="@id/head"
-        android:layout_marginLeft="24dp"
+        android:layout_centerHorizontal="true"
         android:scrollbars="vertical"
         tools:listitem="@layout/promo_item"
         android:background="@drawable/skyblue_border"
@@ -61,7 +59,7 @@
         android:layout_height="400dp"
         android:id="@+id/recyclerViewProduct"
         android:layout_below="@id/recyclerViewPromo"
-        android:layout_marginLeft="24dp"
+        android:layout_centerHorizontal="true"
         android:scrollbars="vertical"
         tools:listitem="@layout/product_item"
         android:background="@drawable/skyblue_border"

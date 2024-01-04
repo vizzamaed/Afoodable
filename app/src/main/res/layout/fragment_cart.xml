@@ -8,7 +8,6 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="350dp"
         android:layout_height="150dp"
@@ -18,7 +17,8 @@
         tools:listitem="@layout/promo_item"
         android:background="@drawable/skyblue_border"
         android:backgroundTint="#80FFFFFF"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -28,7 +28,8 @@
         android:layout_marginTop="15dp"
         android:layout_below="@id/recyclerViewPromo"
         android:layout_marginLeft="24dp"
-        android:id="@+id/linear">
+        android:id="@+id/linear"
+        android:layout_centerHorizontal="true">
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="350dp"
@@ -37,8 +38,5 @@
             android:scrollbars="vertical"
             tools:listitem="@layout/product_item"/>
     </LinearLayout>
-
-
-
 
 </RelativeLayout>
