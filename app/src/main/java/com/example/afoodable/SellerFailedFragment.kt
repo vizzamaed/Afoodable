@@ -80,9 +80,12 @@ class SellerFailedFragment : Fragment() {
                     val businessName = orderSnapshot.child("businessName").getValue(String::class.java)
                     val productID = orderSnapshot.key //
                     val sellerID = orderSnapshot.child("sellerID").getValue(String::class.java) ?: ""
-                    //
                     val orderID = orderSnapshot.child("orderID").getValue(String::class.java) ?: ""
-                    val productsData = ProductsData(productID, itemName, itemDescription, itemPrice, itemImage, businessName, businessLocation, sellerID,orderID)
+                    val userID = orderSnapshot.child("userID").getValue(String::class.java) ?: ""
+                    //
+                    val userName = orderSnapshot.child("userName").getValue(String::class.java) ?: ""
+                    val phone = orderSnapshot.child("phone").getValue(String::class.java) ?: ""
+                    val productsData = ProductsData(productID, itemName, itemDescription, itemPrice, itemImage, businessName, businessLocation, sellerID,orderID,userID,userName,phone)
                     productArrayList.add(productsData)
 
                 }

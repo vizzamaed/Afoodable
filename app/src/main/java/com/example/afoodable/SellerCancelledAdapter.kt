@@ -1,8 +1,6 @@
 package com.example.afoodable
 
-import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,8 +43,12 @@ class SellerCancelledAdapter (private val productList: ArrayList<ProductsData>):
             intent.putExtra("businessLocation", productList[holder.adapterPosition].businessLocation)
             intent.putExtra("ProductID", productList[holder.adapterPosition].productID)
             intent.putExtra("orderID", productList[holder.adapterPosition].orderID)
-            //
             intent.putExtra("userID", productList[holder.adapterPosition].userID)
+            //
+            intent.putExtra("userName", productList[holder.adapterPosition].userName)
+            intent.putExtra("phone", productList[holder.adapterPosition].phone)
+
+
 
             // Include Product ID here
             holder.itemView.context.startActivity(intent)

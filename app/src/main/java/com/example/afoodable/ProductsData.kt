@@ -11,5 +11,7 @@ data class ProductsData (
     var sellerID: String? = null,
     var orderID: String? = null,
     //
-    var userID: String?=null
+    var userID: String?=null,
+    var userName: String?=null,
+    var phone: String?=null
 )

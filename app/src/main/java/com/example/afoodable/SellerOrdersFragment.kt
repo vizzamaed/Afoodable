@@ -76,10 +76,12 @@ class SellerOrdersFragment : Fragment() {
                     val productID = orderSnapshot.key //
                     val sellerID = orderSnapshot.child("sellerID").getValue(String::class.java) ?: ""
                     val orderID = orderSnapshot.child("orderID").getValue(String::class.java) ?: ""
-                    //
                     val userID = orderSnapshot.child("userID").getValue(String::class.java) ?: ""
+                    //
+                    val userName = orderSnapshot.child("userName").getValue(String::class.java) ?: ""
+                    val phone = orderSnapshot.child("phone").getValue(String::class.java) ?: ""
 
-                    val productsData = ProductsData(productID, itemName, itemDescription, itemPrice, itemImage, businessName, businessLocation, sellerID,orderID, userID)
+                    val productsData = ProductsData(productID, itemName, itemDescription, itemPrice, itemImage, businessName, businessLocation, sellerID,orderID, userID,userName,phone)
                     productArrayList.add(productsData)
 
                 }

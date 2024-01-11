@@ -17,8 +17,10 @@ class ViewSellerOrder : AppCompatActivity() {
     var imageURL = ""
     var productID: String = ""
     var orderID: String = ""
-    //
     var userID: String=""
+    //
+    var userName: String=""
+    var phone: String=""
 
 
     private lateinit var binding: ActivityViewSellerOrderBinding
@@ -36,8 +38,8 @@ class ViewSellerOrder : AppCompatActivity() {
             binding.detailItemName.text = bundle.getString("Item Name")
             binding.detailItemPrice.text = bundle.getString("Price")
             binding.detailItemDescription.text = bundle.getString("Description")
-            binding.detailItemBusinessLocation.text = bundle.getString("businessLocation")
-            binding.detailItemBusinessName.text = bundle.getString("businessName")
+            binding.detailBuyer.text = bundle.getString("userName")
+            binding.detailPhone.text = bundle.getString("phone")
 
             imageURL = bundle.getString("Image")!!
 
@@ -58,8 +60,8 @@ class ViewSellerOrder : AppCompatActivity() {
             val itemPrice = binding.detailItemPrice.text.toString()
             val itemDescription = binding.detailItemDescription.text.toString()
             val imageURL = imageURL // Assuming imageURL is a global variable
-            val businessName = binding.detailItemBusinessName.text.toString()
-            val businessLocation = binding.detailItemBusinessLocation.text.toString()
+            val userName = binding.detailBuyer.text.toString()
+            val phone = binding.detailPhone.text.toString()
 
 
             currentUser?.let { user ->
@@ -70,12 +72,13 @@ class ViewSellerOrder : AppCompatActivity() {
                     orderDetails["Price"] = itemPrice
                     orderDetails["Description"] = itemDescription
                     orderDetails["Image"] = imageURL
-                    orderDetails["businessName"] = businessName
-                    orderDetails["businessLocation"] = businessLocation
+                    orderDetails["userName"] = userName
+                    orderDetails["phone"] = phone
                     orderDetails["productID"] = productID
                     orderDetails["orderID"] = orderID
                     //
                     orderDetails["userID"] = userID
+
 
 
                     databaseReference.child(orderID).setValue(orderDetails)
@@ -99,8 +102,8 @@ class ViewSellerOrder : AppCompatActivity() {
             val itemPrice = binding.detailItemPrice.text.toString()
             val itemDescription = binding.detailItemDescription.text.toString()
             val imageURL = imageURL // Assuming imageURL is a global variable
-            val businessName = binding.detailItemBusinessName.text.toString()
-            val businessLocation = binding.detailItemBusinessLocation.text.toString()
+            val userName = binding.detailBuyer.text.toString()
+            val phone = binding.detailPhone.text.toString()
 
 
             currentUser?.let { user ->
@@ -111,8 +114,8 @@ class ViewSellerOrder : AppCompatActivity() {
                 orderDetails["Price"] = itemPrice
                 orderDetails["Description"] = itemDescription
                 orderDetails["Image"] = imageURL
-                orderDetails["businessName"] = businessName
-                orderDetails["businessLocation"] = businessLocation
+                orderDetails["userName"] = userName
+                orderDetails["phone"] = phone
                 orderDetails["productID"] = productID
                 orderDetails["orderID"] = orderID
                 //

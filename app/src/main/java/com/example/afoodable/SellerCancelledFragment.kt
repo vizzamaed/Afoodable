@@ -16,10 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.afoodable.databinding.FragmentHomeBinding
 import com.example.afoodable.databinding.FragmentPreparingOrderBinding
 import com.example.afoodable.databinding.FragmentSellerCancelledBinding
-import com.example.afoodable.databinding.FragmentSellerCompletedBinding
-import com.example.afoodable.databinding.FragmentSellerFailedBinding
 import com.example.afoodable.databinding.FragmentSellerOrdersBinding
-import com.example.afoodable.databinding.FragmentSellerPickUpDeliveryBinding
 import com.example.afoodable.databinding.FragmentSellerPreparingBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
@@ -82,9 +79,11 @@ class SellerCancelledFragment : Fragment() {
                     val productID = orderSnapshot.key //
                     val sellerID = orderSnapshot.child("sellerID").getValue(String::class.java) ?: ""
                     val orderID = orderSnapshot.child("orderID").getValue(String::class.java) ?: ""
-                    //
                     val userID = orderSnapshot.child("userID").getValue(String::class.java) ?: ""
-                    val productsData = ProductsData(productID, itemName, itemDescription, itemPrice, itemImage, businessName, businessLocation, sellerID,orderID,userID)
+                    //
+                    val userName = orderSnapshot.child("userName").getValue(String::class.java) ?: ""
+                    val phone = orderSnapshot.child("phone").getValue(String::class.java) ?: ""
+                    val productsData = ProductsData(productID, itemName, itemDescription, itemPrice, itemImage, businessName, businessLocation, sellerID,orderID,userID,userName,phone)
                     productArrayList.add(productsData)
 
                 }

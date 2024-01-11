@@ -16,6 +16,11 @@ class ViewSellerFailed : AppCompatActivity() {
     var imageURL = ""
     var productID: String = ""
     var orderID: String = ""
+    var userID: String = ""
+    //
+    var userName: String=""
+    var phone: String=""
+
 
 
     private lateinit var binding: ActivityViewSellerFailedBinding
@@ -33,8 +38,8 @@ class ViewSellerFailed : AppCompatActivity() {
             binding.detailItemName.text = bundle.getString("Item Name")
             binding.detailItemPrice.text = bundle.getString("Price")
             binding.detailItemDescription.text = bundle.getString("Description")
-            binding.detailItemBusinessLocation.text = bundle.getString("businessLocation")
-            binding.detailItemBusinessName.text = bundle.getString("businessName")
+            binding.detailBuyer.text = bundle.getString("userName")
+            binding.detailPhone.text = bundle.getString("phone")
 
             imageURL = bundle.getString("Image")!!
 

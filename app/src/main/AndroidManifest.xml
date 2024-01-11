@@ -19,6 +19,12 @@
             android:name=".ViewSellerCompleted"
             android:exported="false" />
         <activity
+            android:name=".ViewSellerCancelled"
+            android:exported="false" />
+        <activity
+            android:name=".ViewSellerFailed"
+            android:exported="false" />
+        <activity
             android:name=".ViewSellerPickUp"
             android:exported="false" />
         <activity

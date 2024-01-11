@@ -150,22 +150,40 @@ class ViewCart : AppCompatActivity() {
         orderDetails: HashMap<String, Any>,
         sellerID: String
     ) {
-        val ordersRef = FirebaseDatabase.getInstance().getReference("Orders").child(sellerID)
+        val currentUserRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUserID)
 
-        //
+        currentUserRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    val phone = dataSnapshot.child("phone").getValue(String::class.java)
+                    val userName = dataSnapshot.child("userName").getValue(String::class.java)
 
-        orderDetails["userID"] = currentUserID
+                    // Add phone and userName to orderDetails
+                    orderDetails["phone"] = phone ?: ""
+                    orderDetails["userName"] = userName ?: ""
 
-        ordersRef.child(orderDetails["orderID"] as String)
-            .setValue(orderDetails)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    // Handle success
-                } else {
-                    // Handle failure
+                    val ordersRef = FirebaseDatabase.getInstance().getReference("Orders").child(sellerID)
+
+                    orderDetails["userID"] = currentUserID
+
+                    ordersRef.child(orderDetails["orderID"] as String)
+                        .setValue(orderDetails)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                // Handle success
+                            } else {
+                                // Handle failure
+                            }
+                        }
                 }
             }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+                // Handle error
+            }
+        })
     }
+
 
 
 
